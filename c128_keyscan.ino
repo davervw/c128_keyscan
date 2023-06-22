@@ -30,9 +30,6 @@
 //
 // TODO: wire RESTORE pin switch DB25-3, DB25-1 GND
 // TODO: wire additional pins for C128 extra keys
-//   DB25-21 D02F scan output bit 0
-//   DB25-22 D02F scan output bit 1
-//   DB25-23 D02F scan output bit 2
 //   DB25-24 40/80 display
 //   DB25-25 CAPS LOCK
 //   DB25-2, DB25-4 No Connection
@@ -41,17 +38,27 @@
 // TODO: show state changes (keydown, keyup)
 
 // wiring is DB25 to Arduino Pro Micro pins
-// PORTA = C64 DC00
-const int PORTA0PIN=9; // DB25-13
-const int PORTA1PIN=8; // DB25-19
-const int PORTA2PIN=7; // DB25-18
-const int PORTA3PIN=6; // DB25-17
-const int PORTA4PIN=5; // DB25-16
-const int PORTA5PIN=4; // DB25-15
-const int PORTA6PIN=3; // DB25-14
-const int PORTA7PIN=2; // DB25-20
+// and 74LS138N needed to expand bus pins
 
-// PORTB = C64 DC01
+const int MUXA0PIN=9; // 3-to-8 MUX address 0 (74LS138) to PORTA0..A7 (see DB25 pins A0..A7)
+const int MUXA1PIN=8; // 3-to-8 MUX address 1 (74LS138) to PORTA0..A7 (see DB25 pins A0..A7)
+const int MUXA2PIN=7; // 3-to-8 MUX address 2 (74LS138) to PORTA0..A7 (see DB25 pins A0..A7)
+const int MUXE3PIN=6; // 3-to-8 MUX enable high
+// PORTA = C64/128 DC00
+// A0: DB25-13
+// A1: DB25-19
+// A2: DB25-18
+// A3: DB25-17
+// A4: DB25-16
+// A5: DB25-15
+// A6: DB25-14
+// A7: DB25-20
+
+const int EXT0PIN=5; // extended keyboard scan register D02F output bit 0 DB25-21
+const int EXT1PIN=4; // extended keyboard scan register D02F output bit 1 DB25-22
+const int EXT2PIN=3; // extended keyboard scan register D02F output bit 2 DB25-23
+
+// PORTB = C88 DC01
 const int PORTB0PIN=A1; // DB25-12
 const int PORTB1PIN=A3; // DB25-11
 const int PORTB2PIN=A2; // DB25-10
@@ -61,6 +68,10 @@ const int PORTB5PIN=10; // DB25-7
 const int PORTB6PIN=15; // DB25-6
 const int PORTB7PIN=A0; // DB25-9
 
+const int NMIPIN=0;
+const int DISPLAY4080PIN=1;
+const int CAPSLOCKPIN=2;
+
 void setup() {
   //Initialize serial and wait for port to open:
   Serial.begin(15200);
@@ -68,22 +79,9 @@ void setup() {
     ;  // wait for serial port to connect. Needed for native USB port only
   }
 
-  pinMode(PORTA0PIN, OUTPUT);
-  pinMode(PORTA1PIN, OUTPUT);
-  pinMode(PORTA2PIN, OUTPUT);
-  pinMode(PORTA3PIN, OUTPUT);
-  pinMode(PORTA4PIN, OUTPUT);
-  pinMode(PORTA5PIN, OUTPUT);
-  pinMode(PORTA6PIN, OUTPUT);
-  pinMode(PORTA7PIN, OUTPUT);
-  digitalWrite(PORTA0PIN, HIGH); // enable off
-  digitalWrite(PORTA1PIN, HIGH); // enable off
-  digitalWrite(PORTA2PIN, HIGH); // enable off
-  digitalWrite(PORTA3PIN, HIGH); // enable off
-  digitalWrite(PORTA4PIN, HIGH); // enable off
-  digitalWrite(PORTA5PIN, HIGH); // enable off
-  digitalWrite(PORTA6PIN, HIGH); // enable off
-  digitalWrite(PORTA7PIN, HIGH); // enable off
+  pinMode(NMIPIN, INPUT_PULLUP);
+  pinMode(DISPLAY4080PIN, INPUT_PULLUP);
+  pinMode(CAPSLOCKPIN, INPUT_PULLUP);
   pinMode(PORTB0PIN, INPUT_PULLUP);
   pinMode(PORTB1PIN, INPUT_PULLUP);
   pinMode(PORTB2PIN, INPUT_PULLUP);
@@ -92,38 +90,40 @@ void setup() {
   pinMode(PORTB5PIN, INPUT_PULLUP);
   pinMode(PORTB6PIN, INPUT_PULLUP);
   pinMode(PORTB7PIN, INPUT_PULLUP);
+  pinMode(MUXE3PIN, OUTPUT);
+  digitalWrite(MUXE3PIN, LOW); // enable off
+  pinMode(MUXA0PIN, OUTPUT);
+  pinMode(MUXA1PIN, OUTPUT);
+  pinMode(MUXA2PIN, OUTPUT);
+  pinMode(EXT0PIN, OUTPUT);
+  pinMode(EXT1PIN, OUTPUT);
+  pinMode(EXT2PIN, OUTPUT);
+  digitalWrite(EXT0PIN, HIGH);
+  digitalWrite(EXT1PIN, HIGH);
+  digitalWrite(EXT2PIN, HIGH);
 }
 
-static int last_scan = 64;
+static int last_scan = 88;
+static int last_nmi = 0;
+static int last_caps = 0;
+static int last_disp = 0;
 
 void loop() {
-  int scan_code = 64;
+  int scan_code = 88;
 
   int scan_out;
-  for (scan_out = 0; scan_out < 8; ++scan_out)
+  for (scan_out = 0; scan_out < 11; ++scan_out)
   {
-    // turn off all buffer enables
-    digitalWrite(PORTA0PIN, HIGH);
-    digitalWrite(PORTA1PIN, HIGH);
-    digitalWrite(PORTA2PIN, HIGH);
-    digitalWrite(PORTA3PIN, HIGH);
-    digitalWrite(PORTA4PIN, HIGH);
-    digitalWrite(PORTA5PIN, HIGH);
-    digitalWrite(PORTA6PIN, HIGH);
-    digitalWrite(PORTA7PIN, HIGH);
+    digitalWrite(MUXE3PIN, LOW); // enable off
 
-    // enable only one
-    switch(scan_out) {
-      case 0: digitalWrite(PORTA0PIN, LOW); break;
-      case 1: digitalWrite(PORTA1PIN, LOW); break;
-      case 2: digitalWrite(PORTA2PIN, LOW); break;
-      case 3: digitalWrite(PORTA3PIN, LOW); break;
-      case 4: digitalWrite(PORTA4PIN, LOW); break;
-      case 5: digitalWrite(PORTA5PIN, LOW); break;
-      case 6: digitalWrite(PORTA6PIN, LOW); break;
-      case 7: digitalWrite(PORTA7PIN, LOW); break;
-      default: Serial.write("internal error");
-    }
+    digitalWrite(MUXA0PIN, scan_out < 8 && (scan_out & 1) ? HIGH : LOW);
+    digitalWrite(MUXA1PIN, scan_out < 8 && (scan_out & 2) ? HIGH : LOW);
+    digitalWrite(MUXA2PIN, scan_out < 8 && (scan_out & 4) ? HIGH : LOW);
+    digitalWrite(EXT0PIN, scan_out == 8 ? LOW : HIGH);
+    digitalWrite(EXT1PIN, scan_out == 9 ? LOW : HIGH);
+    digitalWrite(EXT2PIN, scan_out == 10 ? LOW : HIGH);
+
+    digitalWrite(MUXE3PIN, HIGH); // enable off
 
     // read the bus lines
     int scan0 = digitalRead(PORTB0PIN) & 1;
@@ -147,7 +147,7 @@ void loop() {
     int i;
     for (i=0; i<=7; ++i) {
       int new_scan_code = scan_out*8 + i;
-      if ((scan_in & (1 << i)) == 0 && scan_code == 64)
+      if ((scan_in & (1 << i)) == 0 && scan_code == 88)
         scan_code = new_scan_code;
     }
   }
@@ -157,5 +157,30 @@ void loop() {
     char s[15];
     sprintf(s, "%d\n", scan_code);
     Serial.write(s);
+  }
+
+  int nmi = ~digitalRead(NMIPIN) & 1;
+  int caps = ~digitalRead(CAPSLOCKPIN) & 1;
+  int disp = ~digitalRead(DISPLAY4080PIN) & 1;
+
+  if (nmi != last_nmi) {
+    char s[20];
+    sprintf(s, "RESTORE/NMI: %d\n", nmi);
+    Serial.write(s);
+    last_nmi = nmi;
+  }
+
+  if (caps != last_caps) {
+    char s[15];
+    sprintf(s, "CAPS: %d\n", caps);
+    Serial.write(s);
+    last_caps = caps;
+  }
+
+  if (disp != last_disp) {
+    char s[15];
+    sprintf(s, "DISP: %d\n", disp);
+    Serial.write(s);
+    last_disp = disp;
   }
 }

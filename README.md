@@ -1,8 +1,9 @@
 ## C128D to USB driver prototype ##
 
-Currently shows latest scan code 0..64 to USB serial port via Arudino Pro Micro (3U4).  Code in Arduino IDE.  More work to do, notes in source.
+Currently shows latest scan code 0..88 plus Caps/Display/Restore to USB serial port via Arudino Pro Micro (3U4) and 74LS138.  Code in Arduino IDE.  More work to track multiple up/down and convert to HID adapter.
+(Note: previous version omits 74LS138 to only do 64 keys)
 
-Wiring instructions are in source code
+DB-25 to Pro Micro wiring instructions are in source code.  74LS138 wiring instructions can be inferred from source code and searching for datasheet.
 
 ![prototype.jpg](prototype.jpg)
 
