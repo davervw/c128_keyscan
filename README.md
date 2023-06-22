@@ -7,3 +7,5 @@ Wiring instructions are in source code
 ![prototype.jpg](prototype.jpg)
 
 ![serialout.jpg](serialout.jpg)
+
+[Reference C128 Keyboard @ zimmers](http://www.zimmers.net/anonftp/pub/cbm/schematics/computers/c128/servicemanuals/manual/51.gif)
