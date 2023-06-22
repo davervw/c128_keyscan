@@ -28,14 +28,10 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
 //
-// TODO: wire RESTORE pin switch DB25-3, DB25-1 GND
-// TODO: wire additional pins for C128 extra keys
-//   DB25-24 40/80 display
-//   DB25-25 CAPS LOCK
-//   DB25-2, DB25-4 No Connection
-// TODO: translate to HID keys
-// TODO: show multiple key presses
-// TODO: show state changes (keydown, keyup)
+// TODO: manage multiple key presses
+// TODO: manage state changes (keydown, keyup)
+// TODO: HID keyboard driver
+// TODO: port to Teensy and ESP32
 
 // wiring is DB25 to Arduino Pro Micro pins
 // and 74LS138N needed to expand bus pins
@@ -68,9 +64,10 @@ const int PORTB5PIN=10; // DB25-7
 const int PORTB6PIN=15; // DB25-6
 const int PORTB7PIN=A0; // DB25-9
 
-const int NMIPIN=0;
-const int DISPLAY4080PIN=1;
-const int CAPSLOCKPIN=2;
+// DB25-1 to GND
+const int NMIPIN=0; // DB25-3
+const int DISPLAY4080PIN=1; // DB25-4
+const int CAPSLOCKPIN=2; // DB25-25
 
 void setup() {
   //Initialize serial and wait for port to open:
