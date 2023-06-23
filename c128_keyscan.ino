@@ -413,7 +413,7 @@ void loop() {
         // char s[20];
         // sprintf(s, "i=%d shift=%d map=%02X\n", i, shift, keyboard_map[shift][i]);
         // Serial.write(s);
-        // Keyboard.press(keyboard_map[shift][i]);
+        Keyboard.press(keyboard_map[shift][i]);
 
         if ((i==2 || i==7) && shift) {
           if (new_pressed[15])
