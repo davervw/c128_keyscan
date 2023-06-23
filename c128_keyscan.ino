@@ -403,7 +403,7 @@ void loop() {
 
     if (old_pressed[i] != new_pressed[i])
       if (new_pressed[i]) {
-        if ((i==2 || i==7) && shift) {
+        if ((i==2 || i==7 || i==45 || i==50) && shift) {
           if (new_pressed[15])
             Keyboard.release(KEY_LEFT_SHIFT); // temporarily release so not seletion
           if (new_pressed[52])
@@ -415,7 +415,7 @@ void loop() {
         // Serial.write(s);
         Keyboard.press(keyboard_map[shift][i]);
 
-        if ((i==2 || i==7) && shift) {
+        if ((i==2 || i==7 || i==45 || i==50) && shift) {
           if (new_pressed[15])
             Keyboard.press(KEY_LEFT_SHIFT); // restore state
           if (new_pressed[52])
