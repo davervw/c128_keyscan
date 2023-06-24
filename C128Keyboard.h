@@ -1,4 +1,4 @@
-// c128_keyscan.ino
+// C128Keyboard.h
 //
 // C128 keyboard scan code to USB keyboard HID adapter
 // for Arduino Pro Micro (Leonardo/32U4)
@@ -27,17 +27,18 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
-//
 
-#include "C128Keyboard.h"
+class C128Keyboard {
 
-C128Keyboard c128keys;
+public:
+C128Keyboard();
+void poll();
 
-void setup() {
-  // Serial.begin(15200);
-  // while (!Serial) {}
-}
+private:
+static unsigned char C128Keyboard::keyboard_map[2][88];
+int scanKeys();
+void sendHIDKeys();
+void checkChange(int shift, int scan_code);
 
-void loop() {
-  c128keys.poll();
-}
+C128Keyboard(const C128Keyboard&); // disallow, not implemented
+};
