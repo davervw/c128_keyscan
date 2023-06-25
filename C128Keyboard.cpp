@@ -32,10 +32,12 @@
 //----------------------------------------------------------------------------
 
 // TODO: port to other platforms such as Teensy and ESP32
-// TODO: fix multiple key presses on same column (electrical or bug?)
+// TODO: fix multiple key presses on same column?  Adding additional line driver (ala 74AHC125) to inputs 
+//       from Port B bits 2 and 7 brought a lot of improvement so there is hope.  More investigation needed.
 
 // wiring is DB25 to Arduino Pro Micro pins
-// and 74LS138N needed to expand bus pins
+// and 74LS138 needed to expand bus pins
+// optional 74AHC125 or equivalent line driver to address reading multiple key presses on same row
 
 #include <Keyboard.h>
 #include "C128Keyboard.h"
@@ -296,7 +298,7 @@ void C128Keyboard::poll()
   sendHIDKeys();
 }
 
-int  C128Keyboard::scanKeys()
+int C128Keyboard::scanKeys()
 {
   int scan_code = 88;
   int new_scan_code = 0;
