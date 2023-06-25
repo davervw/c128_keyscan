@@ -1,6 +1,6 @@
-## C128D to USB driver prototype ##
+## C128D to USB keyboard HID driver ##
 
-HID Keyboard driver prototype implemented, with some multiple key presses (same row) issues.  Maybe an electrical pull-up or sink current issue?
+HID Keyboard driver and prototype hardware implemented, with some multiple key presses (same row) issues.  Maybe an electrical pull-up or sink current issue?
 
 Previously shows latest scan code 0..88 plus Caps/Display/Restore to USB serial port via Arudino Pro Micro (3U4) and 74LS138.  Code in Arduino IDE.
 (Note: previous version omits 74LS138 to only do 64 keys.)
