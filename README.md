@@ -9,7 +9,7 @@ This hardware and software allows a Commodore 128D keyboard to be used as an alm
     STOP = PAUSE/BREAK
     NO SCROLL = SCROLL LOCK
 
-Status: some multiple key presses (same row) issues.  Maybe an electrical pull-up or sink current issue?
+Status: there are some multiple key presses (same row) issues.  Looks like a keyboard issue not pulling down low enough, too much resistance.  Adding another line driver circuit (74AHC15) on row inputs from DB25-9 and DB25-10 clear up some of the problems.  The row for DB25-9 includes the left shift with bottom row letters which are all working in combination except comma and slash keys not working with left shift, and intermitent issues with left shift cursor up.  The additional line driver for the row connected to DB-10 also corrected the Ctrl A key combination. Further investigation and corrections (clean that keyboard again?) should be possible with additional effort.  It would probably make a good blog post or video.
 
 Previously shows latest scan code 0..88 plus Caps/Display/Restore to USB serial port via Arudino Pro Micro (3U4) and 74LS138.  Code in Arduino IDE.
 (Note: previous version omits 74LS138 to only do 64 keys.)
