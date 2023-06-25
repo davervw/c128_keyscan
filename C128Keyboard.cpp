@@ -425,6 +425,7 @@ void C128Keyboard::checkSuppressShift(int shift)
       checkToggleKey(0, 7);
       checkToggleKey(0, 45);    
       checkToggleKey(0, 50);
+      checkToggleKey(0, 24);
     }
 
     // suppress state change this time
@@ -438,6 +439,7 @@ void C128Keyboard::checkSuppressShift(int shift)
     checkToggleKey(1, 7);    
     checkToggleKey(1, 45);    
     checkToggleKey(1, 50);
+    checkToggleKey(1, 24);
     last_suppress = false;
   }
 }
@@ -449,7 +451,8 @@ bool C128Keyboard::mustSuppressShift(int shift)
   return new_pressed[2] // LEFT CURSOR
     || new_pressed[7] // UP CURSOR
     || new_pressed[45] // [
-    || new_pressed[50]; // ]
+    || new_pressed[50] // ]
+    || new_pressed[24]; // ' single quote
 }
 
 void C128Keyboard::checkToggleKey(int shift, int scan_code)
