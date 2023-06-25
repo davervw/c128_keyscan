@@ -31,8 +31,8 @@
 
 //----------------------------------------------------------------------------
 
-// TODO: fix Shift+Cursor keys, must unshift
 // TODO: port to other platforms such as Teensy and ESP32
+// TODO: fix multiple key presses on same column (electrical or bug?)
 
 // wiring is DB25 to Arduino Pro Micro pins
 // and 74LS138N needed to expand bus pins
@@ -377,6 +377,8 @@ void C128Keyboard::sendHIDKeys()
 
   int i;
   int shift = new_pressed[15] || new_pressed[52]; // LSHIFT or RSHIFT
+  
+  checkSuppressShift(shift);
 
   checkChange(shift, 15); // LSHIFT
   checkChange(shift, 52); // RSHIFT
@@ -396,13 +398,63 @@ void C128Keyboard::sendHIDKeys()
   memcpy(old_pressed, new_pressed, 88);  
 }
 
+bool C128Keyboard::isChanged(int scan_code)
+{
+  return (old_pressed[scan_code] != new_pressed[scan_code]);
+}
+
 void C128Keyboard::checkChange(int shift, int scan_code)
 {
-  if (old_pressed[scan_code] == new_pressed[scan_code])
+  if (!isChanged(scan_code))
     return;
   int hid_key = keyboard_map[shift][scan_code];
   if (new_pressed[scan_code])
     Keyboard.press(hid_key);
   else
     Keyboard.release(hid_key);
+}
+
+void C128Keyboard::checkSuppressShift(int shift)
+{
+  static bool last_suppress = false;
+  if (mustSuppressShift(shift)) {
+    if (!last_suppress) {
+      checkToggleKey(0, 2);    
+      checkToggleKey(0, 7);
+      checkToggleKey(0, 45);    
+      checkToggleKey(0, 50);
+    }
+
+    // suppress state change this time
+    new_pressed[15] = 0;
+    new_pressed[52] = 0;
+
+    last_suppress = true;
+  } 
+  else if (last_suppress) {
+    checkToggleKey(1, 2);    
+    checkToggleKey(1, 7);    
+    checkToggleKey(1, 45);    
+    checkToggleKey(1, 50);
+    last_suppress = false;
+  }
+}
+
+bool C128Keyboard::mustSuppressShift(int shift)
+{
+  if (!shift)
+    return false;
+  return new_pressed[2] // LEFT CURSOR
+    || new_pressed[7] // UP CURSOR
+    || new_pressed[45] // [
+    || new_pressed[50]; // ]
+}
+
+void C128Keyboard::checkToggleKey(int shift, int scan_code)
+{
+    // check for switching from UP to DOWN, or LEFT to RIGHT, or vice versa on same key
+    if (new_pressed[scan_code] && old_pressed[scan_code]) {
+      Keyboard.release(keyboard_map[shift][scan_code]);
+      Keyboard.press(keyboard_map[1-shift][scan_code]);
+    }
 }
