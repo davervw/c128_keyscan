@@ -35,7 +35,7 @@ C128Keyboard();
 void poll();
 
 private:
-static unsigned char C128Keyboard::keyboard_map[2][88];
+static unsigned char C128Keyboard::keyboard_map[2][64];
 int scanKeys();
 void sendHIDKeys();
 bool C128Keyboard::isChanged(int scan_code);
