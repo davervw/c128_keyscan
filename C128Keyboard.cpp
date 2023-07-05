@@ -67,9 +67,11 @@ static const int PORTB6PIN=16; // DB25-6
 static const int PORTB7PIN=10; // DB25-9
 
 // DB25-1 to GND
-static const int NMIPIN=0; // DB25-3
-//static const int DISPLAY4080PIN=1; // DB25-4
+//static const int NMIPIN=0; // DB25-3
+//static const int DISPLAY4080PIN=1; // DB25-24
 //static const int CAPSLOCKPIN=1; // DB25-25
+
+// no connection DB25-2, DB25-4
 
 static int last_scan = 64;
 static int last_nmi = 0;
@@ -81,7 +83,7 @@ static bool new_pressed[64];
 C128Keyboard::C128Keyboard() {
   Keyboard.begin();
 
-  pinMode(NMIPIN, INPUT_PULLUP);
+  //pinMode(NMIPIN, INPUT_PULLUP);
   //pinMode(DISPLAY4080PIN, INPUT_PULLUP);
   //pinMode(CAPSLOCKPIN, INPUT_PULLUP);
   pinMode(PORTB0PIN, INPUT_PULLUP);
@@ -92,14 +94,14 @@ C128Keyboard::C128Keyboard() {
   pinMode(PORTB5PIN, INPUT_PULLUP);
   pinMode(PORTB6PIN, INPUT_PULLUP);
   pinMode(PORTB7PIN, INPUT_PULLUP);
-  pinMode(PORTA0PIN, OUTPUT);
-  pinMode(PORTA1PIN, OUTPUT);
-  pinMode(PORTA2PIN, OUTPUT);
-  pinMode(PORTA3PIN, OUTPUT);
-  pinMode(PORTA4PIN, OUTPUT);
-  pinMode(PORTA5PIN, OUTPUT);
-  pinMode(PORTA6PIN, OUTPUT);
-  pinMode(PORTA7PIN, OUTPUT);
+  pinMode(PORTA0PIN, INPUT); // HI-Z
+  pinMode(PORTA1PIN, INPUT); // HI-Z
+  pinMode(PORTA2PIN, INPUT); // HI-Z
+  pinMode(PORTA3PIN, INPUT); // HI-Z
+  pinMode(PORTA4PIN, INPUT); // HI-Z
+  pinMode(PORTA5PIN, INPUT); // HI-Z
+  pinMode(PORTA6PIN, INPUT); // HI-Z
+  pinMode(PORTA7PIN, INPUT); // HI-Z
 }
 
 static unsigned char C128Keyboard::keyboard_map[2][64] = {
@@ -300,14 +302,20 @@ int C128Keyboard::scanKeys()
   for (scan_out = 0; scan_out < 8; ++scan_out)
   {
     // write one column of keyboard matrix LOW
-    digitalWrite(PORTA0PIN, scan_out == 0 ? LOW : HIGH);
-    digitalWrite(PORTA1PIN, scan_out == 1 ? LOW : HIGH);
-    digitalWrite(PORTA2PIN, scan_out == 2 ? LOW : HIGH);
-    digitalWrite(PORTA3PIN, scan_out == 3 ? LOW : HIGH);
-    digitalWrite(PORTA4PIN, scan_out == 4 ? LOW : HIGH);
-    digitalWrite(PORTA5PIN, scan_out == 5 ? LOW : HIGH);
-    digitalWrite(PORTA6PIN, scan_out == 6 ? LOW : HIGH);
-    digitalWrite(PORTA7PIN, scan_out == 7 ? LOW : HIGH);
+    int output_pin = -1;
+    switch (scan_out) 
+    {
+      case 0: output_pin = PORTA0PIN; break;
+      case 1: output_pin = PORTA1PIN; break;
+      case 2: output_pin = PORTA2PIN; break;
+      case 3: output_pin = PORTA3PIN; break;
+      case 4: output_pin = PORTA4PIN; break;
+      case 5: output_pin = PORTA5PIN; break;
+      case 6: output_pin = PORTA6PIN; break;
+      case 7: output_pin = PORTA7PIN; break;
+    }
+    pinMode(output_pin, OUTPUT);
+    digitalWrite(output_pin, LOW);
 
     // read in eight bits, 1 bit of each row
     int scan_in = (digitalRead(PORTB0PIN) << 0) 
@@ -318,6 +326,8 @@ int C128Keyboard::scanKeys()
                 | (digitalRead(PORTB5PIN) << 5) 
                 | (digitalRead(PORTB6PIN) << 6) 
                 | (digitalRead(PORTB7PIN) << 7);
+
+    pinMode(output_pin, INPUT); // HI-Z
 
     int i;
     for (i=0; i<=7; ++i) {
@@ -330,28 +340,28 @@ int C128Keyboard::scanKeys()
     }
   }
 
-  if (scan_code != last_scan) {
-    last_scan = scan_code;
-    char s[20];
-    sprintf(s, "scan: %d\n", scan_code);
-    Serial.write(s);
-  }
+  // if (scan_code != last_scan) {
+  //   last_scan = scan_code;
+  //   char s[20];
+  //   sprintf(s, "scan: %d\n", scan_code);
+  //   Serial.write(s);
+  // }
   
   return scan_code;
 }
 
 void C128Keyboard::sendHIDKeys()
 {
-  int nmi = ~digitalRead(NMIPIN) & 1;
+  //int nmi = ~digitalRead(NMIPIN) & 1;
   //int caps = ~digitalRead(CAPSLOCKPIN) & 1;
   //int disp = ~digitalRead(DISPLAY4080PIN) & 1;
 
-  if (nmi != last_nmi) {
-    char s[20];
-    sprintf(s, "RESTORE/NMI: %d\n", nmi);
-    Serial.write(s);
-    last_nmi = nmi;
-  }
+  // if (nmi != last_nmi) {
+  //   char s[20];
+  //   sprintf(s, "RESTORE/NMI: %d\n", nmi);
+  //   Serial.write(s);
+  //   last_nmi = nmi;
+  // }
 
   // if (caps != last_caps) {
   //   char s[15];

@@ -34,8 +34,8 @@
 C128Keyboard c128keys;
 
 void setup() {
-  Serial.begin(15200);
-  while (!Serial) {}
+  // Serial.begin(15200);
+  // while (!Serial) {}
 }
 
 void loop() {
