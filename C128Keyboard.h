@@ -28,8 +28,6 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include <Arduino.h>
-
 class C128Keyboard {
 
 public:
@@ -37,8 +35,14 @@ C128Keyboard();
 void poll();
 
 private:
+static unsigned char C128Keyboard::keyboard_map[2][88];
 int scanKeys();
-void sendKeys();
+void sendHIDKeys();
+bool C128Keyboard::isChanged(int scan_code);
+void checkChange(int shift, int scan_code);
+bool mustSuppressShift(int shift);
+void checkSuppressShift(int shift);
+void checkToggleKey(int shift, int scan_code);
 
 C128Keyboard(const C128Keyboard&); // disallow, not implemented
 };

@@ -32,14 +32,10 @@
 //----------------------------------------------------------------------------
 
 // TODO: port to other platforms such as Teensy and ESP32
-// TODO: fix multiple key presses on same column?  Adding additional line driver (ala 74AHC125) to inputs 
-//       from Port B bits 2 and 7 brought a lot of improvement so there is hope.  More investigation needed.
 
 // wiring is DB25 to Arduino Pro Micro pins
-// and 74LS138 needed to expand bus pins
-// optional 74AHC125 or equivalent line driver to address reading multiple key presses on same row
 
-//#include <Keyboard.h>
+#include <Keyboard.h>
 #include "C128Keyboard.h"
 
 // PORTA = C64/128 DC00
@@ -80,8 +76,191 @@ static int last_disp = 0;
 static bool old_pressed[88];
 static bool new_pressed[88];
 
+static unsigned char C128Keyboard::keyboard_map[2][88] = {
+  {
+  KEY_BACKSPACE, // 0
+  KEY_RETURN, // 1
+  KEY_RIGHT_ARROW, // 2
+  KEY_F7, // 3
+  KEY_F1, // 4
+  KEY_F3, // 5
+  KEY_F5, // 6
+  KEY_DOWN_ARROW, // 7
+  '3', // 8
+  'w', // 9
+  'a', // 10
+  '4', // 11
+  'z', // 12
+  's', // 13
+  'e', // 14
+  KEY_LEFT_SHIFT, // 15
+  '5', // 16
+  'r', // 17
+  'd', // 18
+  '6', // 19
+  'c', // 20
+  'f', // 21
+  't', // 22
+  'x', // 23
+  '7', // 24
+  'y', // 25
+  'g', // 26
+  '8', // 27
+  'b', // 28
+  'h', // 29
+  'u', // 30
+  'v', // 31
+  '9', // 32
+  'i', // 33
+  'j', // 34
+  '0', // 35
+  'm', // 36
+  'k', // 37
+  'o', // 38
+  'n', // 39
+  '+', // 40
+  'p', // 41
+  'l', // 42
+  '-', // 43
+  '.', // 44
+  ':', // 45
+  '@', // 46
+  ',', // 47
+  '\\', // 48
+  '*', // 49
+  ';', // 50
+  KEY_HOME, // 51
+  KEY_RIGHT_SHIFT, // 52
+  '=', // 53
+  '^', // 54
+  '/', // 55
+  '1', // 56
+  '_', // 57
+  KEY_LEFT_CTRL, // 58
+  '2', // 59
+  ' ', // 60
+  KEY_LEFT_GUI, // 61
+  'q', // 62
+  KEY_PAUSE, // 63
+  KEY_F1, // HELP 64
+  KEY_KP_8, // 65
+  KEY_KP_5, // 66
+  KEY_TAB, // 67
+  KEY_KP_2, // 68
+  KEY_KP_4, // 69
+  KEY_KP_7, // 70
+  KEY_KP_1, // 71
+  KEY_ESC, // 72
+  KEY_KP_PLUS, // 73
+  KEY_KP_MINUS, // 74
+  KEY_NUM_LOCK, // LINE FEED 75
+  KEY_KP_ENTER, // 76
+  KEY_KP_6, // 77
+  KEY_KP_9, // 78
+  KEY_KP_3, // 79
+  KEY_LEFT_ALT, // 80
+  KEY_KP_0, // 81
+  KEY_KP_DOT, // 82
+  KEY_UP_ARROW, // 83
+  KEY_DOWN_ARROW, // 84
+  KEY_LEFT_ARROW, // 85
+  KEY_RIGHT_ARROW, // 86
+  KEY_SCROLL_LOCK, // 87
+  },
+  {
+  KEY_INSERT, // 0
+  KEY_RETURN, // 1
+  KEY_LEFT_ARROW, // 2
+  KEY_F8, // 3
+  KEY_F2, // 4
+  KEY_F4, // 5
+  KEY_F6, // 6
+  KEY_UP_ARROW, // 7 
+  '#', // 8
+  'W', // 9
+  'A', // 10
+  '$', // 11
+  'Z', // 12
+  'S', // 13
+  'E', // 14
+  KEY_LEFT_SHIFT, // 15
+  '%', // 16
+  'R', // 17
+  'D', // 18
+  '&', // 19
+  'C', // 20
+  'F', // 21
+  'T', // 22
+  'X', // 23
+  '\'', // 24
+  'Y', // 25
+  'G', // 26
+  '(', // 27
+  'B', // 28
+  'H', // 29
+  'U', // 30
+  'V', // 31
+  ')', // 32
+  'I', // 33
+  'J', // 34
+  0, // 0 35
+  'M', // 36
+  'K', // 37
+  'O', // 38
+  'N', // 39
+  '+', // 40
+  'P', // 41
+  'L', // 42
+  '-', // 43
+  '>', // 44
+  '[', // 45
+  '@', // 46
+  '<', // 47
+  '\\', // 48
+  '*', // 49
+  ']', // 50
+  KEY_HOME, // 51
+  KEY_RIGHT_SHIFT, // 52
+  '=', // 53
+  '^', // 54
+  '/', // 55
+  '!', // 56
+  '_', // 57
+  KEY_LEFT_CTRL, // 58
+  '"', // 59
+  ' ', // 60
+  KEY_LEFT_GUI, // 61
+  'Q', // 62
+  KEY_PAUSE, // 63
+  KEY_F1, // HELP 64
+  KEY_KP_8, // 65
+  KEY_KP_5, // 66
+  KEY_TAB, // 67
+  KEY_KP_2, // 68
+  KEY_KP_4, // 69
+  KEY_KP_7, // 70
+  KEY_KP_1, // 71
+  KEY_ESC, // 72
+  KEY_KP_PLUS, // 73
+  KEY_KP_MINUS, // 74
+  KEY_NUM_LOCK, // LINE FEED 75
+  KEY_KP_ENTER, // 76
+  KEY_KP_6, // 77
+  KEY_KP_9, // 78
+  KEY_KP_3, // 79
+  KEY_LEFT_ALT, // 80
+  KEY_KP_0, // 81     
+  KEY_KP_DOT, // 82
+  KEY_UP_ARROW, // 83
+  KEY_DOWN_ARROW, // 84
+  KEY_LEFT_ARROW, // 85
+  KEY_RIGHT_ARROW, // 86
+  KEY_SCROLL_LOCK, // 87
+  },
+};
+
 C128Keyboard::C128Keyboard() {
-  //Keyboard.begin();
+  Keyboard.begin();
 
   pinMode(NMIPIN, INPUT_PULLUP);
   pinMode(DISPLAY4080PIN, INPUT_PULLUP);
@@ -107,18 +286,7 @@ C128Keyboard::C128Keyboard() {
 void C128Keyboard::poll()
 {
   scanKeys();
-
-  int nmi = ~digitalRead(NMIPIN) & 1;
-  int caps = ~digitalRead(CAPSLOCKPIN) & 1;
-  int disp = ~digitalRead(DISPLAY4080PIN) & 1;
-
-  if (memcmp(old_pressed, new_pressed, 88) != 0 || last_nmi != nmi || last_caps != caps || last_disp != disp) {
-    last_nmi = nmi;
-    last_caps = caps;
-    last_disp = disp;
-    sendKeys();
-    memcpy(old_pressed, new_pressed, 88);
-  }
+  sendHIDKeys();
 }
 
 int C128Keyboard::scanKeys()
@@ -181,42 +349,120 @@ int C128Keyboard::scanKeys()
   return scan_code;
 }
 
-void C128Keyboard::sendKeys()
+void C128Keyboard::sendHIDKeys()
 {
-  static char keyString[128];
-  static char num[6];
+  int nmi = ~digitalRead(NMIPIN) & 1;
+  int caps = ~digitalRead(CAPSLOCKPIN) & 1;
+  int disp = ~digitalRead(DISPLAY4080PIN) & 1;
 
-  keyString[0] = 0;
+  if (nmi != last_nmi) {
+    // char s[20];
+    // sprintf(s, "RESTORE/NMI: %d\n", nmi);
+    // Serial.write(s);
+    last_nmi = nmi;
+  }
+
+  if (caps != last_caps) {
+    // char s[15];
+    // sprintf(s, "CAPS: %d\n", caps);
+    // Serial.write(s);
+    Keyboard.press(KEY_CAPS_LOCK);
+    Keyboard.release(KEY_CAPS_LOCK);
+    last_caps = caps;
+  }
+
+  if (disp != last_disp) {
+    // char s[15];
+    // sprintf(s, "DISP: %d\n", disp);
+    // Serial.write(s);
+    Keyboard.press(KEY_NUM_LOCK);
+    Keyboard.release(KEY_NUM_LOCK);
+    last_disp = disp;
+  }
 
   int i;
-  for (i=0; i<88; ++i) {
-    if (new_pressed[i]) {
-      if (strlen(keyString) > 0)
-        strncat(keyString, ",", sizeof(keyString));
-      strncat(keyString, itoa(i, num, 10), sizeof(keyString));
-    }
-  } 
+  int shift = new_pressed[15] || new_pressed[52]; // LSHIFT or RSHIFT
+  
+  checkSuppressShift(shift);
 
-  if (last_nmi == 1) {
-    if (strlen(keyString) > 0)
-      strncat(keyString, ",", sizeof(keyString));
-    strncat(keyString, "1024", sizeof(keyString));
+  checkChange(shift, 15); // LSHIFT
+  checkChange(shift, 52); // RSHIFT
+
+  // if (memcmp(new_pressed, old_pressed, 88) != 0) {
+  //   for (i = 0; i < 88; ++i)
+  //     Serial.write('0' + new_pressed[i]);
+  //   Serial.write('\n');
+  // }
+
+  for (i = 0; i < 88; ++i) {
+    if (i==15 || i==52) // already handled
+      continue;
+    checkChange(shift, i);
   }
 
-  if (last_caps == 1) {
-    if (strlen(keyString) > 0)
-      strncat(keyString, ",", sizeof(keyString));
-    strncat(keyString, "128", sizeof(keyString));
-  }
+  memcpy(old_pressed, new_pressed, 88);  
+}
 
-  if (last_disp == 1) {
-    if (strlen(keyString) > 0)
-      strncat(keyString, ",", sizeof(keyString));
-    strncat(keyString, "256", sizeof(keyString));
-  }
+bool C128Keyboard::isChanged(int scan_code)
+{
+  return (old_pressed[scan_code] != new_pressed[scan_code]);
+}
 
-  if (keyString[0] == 0)
-    Serial.println("88");
+void C128Keyboard::checkChange(int shift, int scan_code)
+{
+  if (!isChanged(scan_code))
+    return;
+  int hid_key = keyboard_map[shift][scan_code];
+  if (new_pressed[scan_code])
+    Keyboard.press(hid_key);
   else
-    Serial.println(keyString);
+    Keyboard.release(hid_key);
+}
+
+void C128Keyboard::checkSuppressShift(int shift)
+{
+  static bool last_suppress = false;
+  if (mustSuppressShift(shift)) {
+    if (!last_suppress) {
+      checkToggleKey(0, 2);    
+      checkToggleKey(0, 7);
+      checkToggleKey(0, 45);    
+      checkToggleKey(0, 50);
+      checkToggleKey(0, 24);
+    }
+
+    // suppress state change this time
+    new_pressed[15] = 0;
+    new_pressed[52] = 0;
+
+    last_suppress = true;
+  } 
+  else if (last_suppress) {
+    checkToggleKey(1, 2);    
+    checkToggleKey(1, 7);    
+    checkToggleKey(1, 45);    
+    checkToggleKey(1, 50);
+    checkToggleKey(1, 24);
+    last_suppress = false;
+  }
+}
+
+bool C128Keyboard::mustSuppressShift(int shift)
+{
+  if (!shift)
+    return false;
+  return new_pressed[2] // LEFT CURSOR
+    || new_pressed[7] // UP CURSOR
+    || new_pressed[45] // [
+    || new_pressed[50] // ]
+    || new_pressed[24]; // ' single quote
+}
+
+void C128Keyboard::checkToggleKey(int shift, int scan_code)
+{
+    // check for switching from UP to DOWN, or LEFT to RIGHT, or vice versa on same key
+    if (new_pressed[scan_code] && old_pressed[scan_code]) {
+      Keyboard.release(keyboard_map[shift][scan_code]);
+      Keyboard.press(keyboard_map[1-shift][scan_code]);
+    }
 }
