@@ -39,8 +39,8 @@
 // PORTA = C64/128 DC00
 static const int PORTA0PIN=0; // A0: DB25-13
 static const int PORTA1PIN=1; // A1: DB25-19
-static const int PORTA2PIN=2; // A2: DB25-18
-static const int PORTA3PIN=3; // A3: DB25-17
+static const int PORTA2PIN=14; // A2: DB25-18
+static const int PORTA3PIN=6; // A3: DB25-17
 static const int PORTA4PIN=5; // A4: DB25-16
 static const int PORTA5PIN=7; // A5: DB25-15
 static const int PORTA6PIN=9; // A6: DB25-14
@@ -62,7 +62,7 @@ static const int PORTB7PIN=16; // DB25-9
 
 // DB25-1 to GND
 static const int NMIPIN=4; // DB25-3
-static const int DISPLAY4080PIN=6; // DB25-24
+static const int DISPLAY4080PIN=3; // DB25-24
 static const int CAPSLOCKPIN=8; // DB25-25
 
 // no connection DB25-2, DB25-4
