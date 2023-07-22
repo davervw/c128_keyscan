@@ -43,49 +43,49 @@
 #include "C128Keyboard.h"
 
 // PORTA = C64/128 DC00
-static const int PORTA0PIN=2; // A0: DB25-13
-static const int PORTA1PIN=3; // A1: DB25-19
-static const int PORTA2PIN=4; // A2: DB25-18
-static const int PORTA3PIN=5; // A3: DB25-17
-static const int PORTA4PIN=6; // A4: DB25-16
+static const int PORTA0PIN=0; // A0: DB25-13
+static const int PORTA1PIN=1; // A1: DB25-19
+static const int PORTA2PIN=2; // A2: DB25-18
+static const int PORTA3PIN=3; // A3: DB25-17
+static const int PORTA4PIN=5; // A4: DB25-16
 static const int PORTA5PIN=7; // A5: DB25-15
-static const int PORTA6PIN=8; // A6: DB25-14
-static const int PORTA7PIN=9; // A7: DB25-20
+static const int PORTA6PIN=9; // A6: DB25-14
+static const int PORTA7PIN=10; // A7: DB25-20
 
-// static const int EXT0PIN=5; // extended keyboard scan register D02F output bit 0 DB25-21
-// static const int EXT1PIN=4; // extended keyboard scan register D02F output bit 1 DB25-22
-// static const int EXT2PIN=3; // extended keyboard scan register D02F output bit 2 DB25-23
+static const int EXT0PIN=11; // extended keyboard scan register D02F output bit 0 DB25-21
+static const int EXT1PIN=12; // extended keyboard scan register D02F output bit 1 DB25-22
+static const int EXT2PIN=13; // extended keyboard scan register D02F output bit 2 DB25-23
 
 // PORTB = C88 DC01
-static const int PORTB0PIN=A3; // DB25-12
-static const int PORTB1PIN=A2; // DB25-11
-static const int PORTB2PIN=A1; // DB25-10
-static const int PORTB3PIN=A0; // DB25-5
-static const int PORTB4PIN=15; // DB25-8
-static const int PORTB5PIN=14; // DB25-7
-static const int PORTB6PIN=16; // DB25-6
-static const int PORTB7PIN=10; // DB25-9
+static const int PORTB0PIN=A0; // DB25-12
+static const int PORTB1PIN=A1; // DB25-11
+static const int PORTB2PIN=A2; // DB25-10
+static const int PORTB3PIN=A3; // DB25-5
+static const int PORTB4PIN=A4; // DB25-8
+static const int PORTB5PIN=A5; // DB25-7
+static const int PORTB6PIN=15; // DB25-6
+static const int PORTB7PIN=16; // DB25-9
 
 // DB25-1 to GND
-static const int NMIPIN=0; // DB25-3
-//static const int DISPLAY4080PIN=1; // DB25-24
-//static const int CAPSLOCKPIN=1; // DB25-25
+static const int NMIPIN=4; // DB25-3
+static const int DISPLAY4080PIN=6; // DB25-24
+static const int CAPSLOCKPIN=8; // DB25-25
 
 // no connection DB25-2, DB25-4
 
-static int last_scan = 64;
+static int last_scan = 88;
 static int last_nmi = 0;
-//static int last_caps = 0;
-//static int last_disp = 0;
-static bool old_pressed[64];
-static bool new_pressed[64];
+static int last_caps = 0;
+static int last_disp = 0;
+static bool old_pressed[88];
+static bool new_pressed[88];
 
 C128Keyboard::C128Keyboard() {
   //Keyboard.begin();
 
   pinMode(NMIPIN, INPUT_PULLUP);
-  //pinMode(DISPLAY4080PIN, INPUT_PULLUP);
-  //pinMode(CAPSLOCKPIN, INPUT_PULLUP);
+  pinMode(DISPLAY4080PIN, INPUT_PULLUP);
+  pinMode(CAPSLOCKPIN, INPUT_PULLUP);
   pinMode(PORTB0PIN, INPUT_PULLUP);
   pinMode(PORTB1PIN, INPUT_PULLUP);
   pinMode(PORTB2PIN, INPUT_PULLUP);
@@ -109,21 +109,25 @@ void C128Keyboard::poll()
   scanKeys();
 
   int nmi = ~digitalRead(NMIPIN) & 1;
+  int caps = ~digitalRead(CAPSLOCKPIN) & 1;
+  int disp = ~digitalRead(DISPLAY4080PIN) & 1;
 
-  if (memcmp(old_pressed, new_pressed, 64) != 0 || last_nmi != nmi) {
+  if (memcmp(old_pressed, new_pressed, 88) != 0 || last_nmi != nmi || last_caps != caps || last_disp != disp) {
     last_nmi = nmi;
+    last_caps = caps;
+    last_disp = disp;
     sendKeys();
-    memcpy(old_pressed, new_pressed, 64);
+    memcpy(old_pressed, new_pressed, 88);
   }
 }
 
 int C128Keyboard::scanKeys()
 {
-  int scan_code = 64;
+  int scan_code = 88;
   int new_scan_code = 0;
 
   int scan_out;
-  for (scan_out = 0; scan_out < 8; ++scan_out)
+  for (scan_out = 0; scan_out < 11; ++scan_out)
   {
     // write one column of keyboard matrix LOW
     int output_pin = -1;
@@ -137,6 +141,9 @@ int C128Keyboard::scanKeys()
       case 5: output_pin = PORTA5PIN; break;
       case 6: output_pin = PORTA6PIN; break;
       case 7: output_pin = PORTA7PIN; break;
+      case 8: output_pin = EXT0PIN; break;
+      case 9: output_pin = EXT1PIN; break;
+      case 10: output_pin = EXT2PIN; break;
     }
     pinMode(output_pin, OUTPUT);
     digitalWrite(output_pin, LOW);
@@ -157,7 +164,7 @@ int C128Keyboard::scanKeys()
     for (i=0; i<=7; ++i) {
       int pressed = ((scan_in & (1 << i)) == 0);
       new_pressed[new_scan_code] = pressed;
-      int first_pressed = (pressed && scan_code == 64);
+      int first_pressed = (pressed && scan_code == 88);
       if (first_pressed) 
         scan_code = new_scan_code;
       ++new_scan_code;
@@ -176,13 +183,13 @@ int C128Keyboard::scanKeys()
 
 void C128Keyboard::sendKeys()
 {
-  static char keyString[64];
+  static char keyString[128];
   static char num[6];
 
   keyString[0] = 0;
 
   int i;
-  for (i=0; i<64; ++i) {
+  for (i=0; i<88; ++i) {
     if (new_pressed[i]) {
       if (strlen(keyString) > 0)
         strncat(keyString, ",", sizeof(keyString));
@@ -193,11 +200,23 @@ void C128Keyboard::sendKeys()
   if (last_nmi == 1) {
     if (strlen(keyString) > 0)
       strncat(keyString, ",", sizeof(keyString));
-    strncat(keyString, "1088", sizeof(keyString));
+    strncat(keyString, "1024", sizeof(keyString));
+  }
+
+  if (last_caps == 1) {
+    if (strlen(keyString) > 0)
+      strncat(keyString, ",", sizeof(keyString));
+    strncat(keyString, "128", sizeof(keyString));
+  }
+
+  if (last_disp == 1) {
+    if (strlen(keyString) > 0)
+      strncat(keyString, ",", sizeof(keyString));
+    strncat(keyString, "256", sizeof(keyString));
   }
 
   if (keyString[0] == 0)
-    Serial.println("64");
+    Serial.println("88");
   else
     Serial.println(keyString);
 }
