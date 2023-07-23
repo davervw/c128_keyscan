@@ -40,30 +40,30 @@
 
 // PORTA = C64/128 DC00
 static const int PORTA0PIN=0; // A0: DB25-13
-static const int PORTA1PIN=1; // A1: DB25-19
-static const int PORTA2PIN=14; // A2: DB25-18
-static const int PORTA3PIN=6; // A3: DB25-17
-static const int PORTA4PIN=5; // A4: DB25-16
-static const int PORTA5PIN=7; // A5: DB25-15
-static const int PORTA6PIN=9; // A6: DB25-14
-static const int PORTA7PIN=10; // A7: DB25-20
+static const int PORTA1PIN=A4; // A1: DB25-19
+static const int PORTA2PIN=A0; // A2: DB25-18
+static const int PORTA3PIN=A3; // A3: DB25-17
+static const int PORTA4PIN=A2; // A4: DB25-16
+static const int PORTA5PIN=A1; // A5: DB25-15
+static const int PORTA6PIN=12; // A6: DB25-14
+static const int PORTA7PIN=A5; // A7: DB25-20
 
-static const int EXT0PIN=11; // extended keyboard scan register D02F output bit 0 DB25-21
-static const int EXT1PIN=12; // extended keyboard scan register D02F output bit 1 DB25-22
-static const int EXT2PIN=13; // extended keyboard scan register D02F output bit 2 DB25-23
+static const int EXT0PIN=15; // extended keyboard scan register D02F output bit 0 DB25-21
+static const int EXT1PIN=16; // extended keyboard scan register D02F output bit 1 DB25-22
+static const int EXT2PIN=14; // extended keyboard scan register D02F output bit 2 DB25-23
 
 // PORTB = C88 DC01
-static const int PORTB0PIN=A0; // DB25-12
-static const int PORTB1PIN=A1; // DB25-11
-static const int PORTB2PIN=A2; // DB25-10
-static const int PORTB3PIN=A3; // DB25-5
-static const int PORTB4PIN=A4; // DB25-8
-static const int PORTB5PIN=A5; // DB25-7
-static const int PORTB6PIN=15; // DB25-6
-static const int PORTB7PIN=16; // DB25-9
+static const int PORTB0PIN=1; // DB25-12
+static const int PORTB1PIN=6; // DB25-11
+static const int PORTB2PIN=4; // DB25-10
+static const int PORTB3PIN=11; // DB25-5
+static const int PORTB4PIN=7; // DB25-8
+static const int PORTB5PIN=9; // DB25-7
+static const int PORTB6PIN=10; // DB25-6
+static const int PORTB7PIN=5; // DB25-9
 
 // DB25-1 to GND
-static const int NMIPIN=4; // DB25-3
+static const int NMIPIN=13; // DB25-3
 static const int DISPLAY4080PIN=3; // DB25-24
 static const int CAPSLOCKPIN=8; // DB25-25
 
