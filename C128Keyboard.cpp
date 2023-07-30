@@ -62,7 +62,7 @@ static const int PORTB7PIN=5; // DB25-9
 
 // DB25-1 to GND
 static const int NMIPIN=13; // DB25-3
-static const int DISPLAY4080PIN=3; // DB25-24
+//static const int DISPLAY4080PIN=3; // DB25-24
 static const int CAPSLOCKPIN=8; // DB25-25
 
 // no connection DB25-2, DB25-4
@@ -78,7 +78,7 @@ C128Keyboard::C128Keyboard() {
   //Keyboard.begin();
 
   pinMode(NMIPIN, INPUT_PULLUP);
-  pinMode(DISPLAY4080PIN, INPUT_PULLUP);
+  //pinMode(DISPLAY4080PIN, INPUT_PULLUP);
   pinMode(CAPSLOCKPIN, INPUT_PULLUP);
   pinMode(PORTB0PIN, INPUT_PULLUP);
   pinMode(PORTB1PIN, INPUT_PULLUP);
@@ -104,7 +104,7 @@ void C128Keyboard::poll()
 
   int nmi = ~digitalRead(NMIPIN) & 1;
   int caps = ~digitalRead(CAPSLOCKPIN) & 1;
-  int disp = ~digitalRead(DISPLAY4080PIN) & 1;
+  int disp = 0; //~digitalRead(DISPLAY4080PIN) & 1;
 
   if (memcmp(old_pressed, new_pressed, 88) != 0 || last_nmi != nmi || last_caps != caps || last_disp != disp) {
     last_nmi = nmi;
@@ -209,8 +209,10 @@ void C128Keyboard::sendKeys()
     strncat(keyString, "256", sizeof(keyString));
   }
 
+  extern void mySendKeys(const char* keys);
+
   if (keyString[0] == 0)
-    Serial.println("88");
+    mySendKeys("88");
   else
-    Serial.println(keyString);
+    mySendKeys(keyString);
 }
