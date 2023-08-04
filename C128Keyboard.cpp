@@ -62,7 +62,7 @@ static const int PORTB7PIN=5; // DB25-9
 
 // DB25-1 to GND
 static const int NMIPIN=13; // DB25-3
-//static const int DISPLAY4080PIN=3; // DB25-24
+static const int DISPLAY4080PIN=3; // DB25-24
 static const int CAPSLOCKPIN=8; // DB25-25
 
 // no connection DB25-2, DB25-4
@@ -78,7 +78,7 @@ C128Keyboard::C128Keyboard() {
   //Keyboard.begin();
 
   pinMode(NMIPIN, INPUT_PULLUP);
-  //pinMode(DISPLAY4080PIN, INPUT_PULLUP);
+  pinMode(DISPLAY4080PIN, INPUT_PULLUP);
   pinMode(CAPSLOCKPIN, INPUT_PULLUP);
   pinMode(PORTB0PIN, INPUT_PULLUP);
   pinMode(PORTB1PIN, INPUT_PULLUP);
