@@ -30,7 +30,7 @@
 //
 
 #include <SoftwareSerial.h>
-SoftwareSerial mySerial(3, 2); // RX, TX (note: RX pin 3 unsupported on atmega32u4 because no interrupt support on that pin)
+SoftwareSerial mySerial(-1, 2); // RX, TX (note: RX pin 3 unsupported on atmega32u4 because no interrupt support on that pin)
 
 #include "C128Keyboard.h"
 C128Keyboard c128keys;
