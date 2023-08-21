@@ -2,7 +2,7 @@
 
 ## [Adafruit ItsyBitsy](https://learn.adafruit.com/introducting-itsy-bitsy-32u4/) version ##
 
-This hardware and software interprets the Commodore 64/128 scan codes, with the scan codes of the active keys output via USB serial and software driven serial (I was planning on I2C support in my PCB but fell back to sending serial on one of the I2C lines instead).  The keyboard pin numbers are the same between all the Commodore systems, though the dimensions and layout may be different (e.g. single inline pins for most with key at pin 2, or DB-25 for external keyboard with 128D).  Vic-20 keyboards are compatible with Commodore 64, but the Vic-20 internally maps lines differently to its IO chip and the Vic-20 calculates scan codes with a slightly different algorithm, so while digitally compatible with a Vic-20 keyboard, this version outputs Commodore 64/128 scan codes only.  The use of ItsyBitsy allowed all the extra lines necessary to support the extra keys added for C128.  ItsyBitsy is an alternate form factor related to [Arduino Leonardo](https://docs.arduino.cc/hardware/leonardo) with all the extra lines of the 32U4 present.  The [ATmega32U4](https://www.microchip.com/en-us/product/atmega32u4) has the ability to directly act as a USB HID device in conjuction with the Arduino keyboard library.  Utilizing a DB-25 to 0.1" 2.54mm pitch dual row pin socket adapter for the first hand soldered and wired circuit board to make it both easier to build and semi-permanent.
+This hardware and software interprets the Commodore 64/128 scan codes, with the scan codes of the active keys output via software driven serial (I was planning on I2C support in my PCB but fell back to sending serial on one of the I2C lines instead).  The keyboard pin numbers are the same between all the Commodore systems, though the dimensions and layout may be different (e.g. single inline pins for most with key at pin 2, or DB-25 for external keyboard with 128D).  Vic-20 keyboards are compatible with Commodore 64, but the Vic-20 internally maps lines differently to its IO chip and the Vic-20 calculates scan codes with a slightly different algorithm, so while digitally compatible with a Vic-20 keyboard, this version outputs Commodore 64/128 scan codes only.  The use of ItsyBitsy allowed all the extra lines necessary to support the extra keys added for C128.  ItsyBitsy is an alternate form factor related to [Arduino Leonardo](https://docs.arduino.cc/hardware/leonardo) with all the extra lines of the 32U4 present.  The [ATmega32U4](https://www.microchip.com/en-us/product/atmega32u4) has the ability to directly act as a USB HID device in conjuction with the Arduino keyboard library.  Utilizing a DB-25 to 0.1" 2.54mm pitch dual row pin socket adapter for the first hand soldered and wired circuit board to make it both easier to build and semi-permanent.
 
 Status: Working 88+ key solution. Multiple keys pressed on same row issue has been resolved (only one column output must be active at one time, otherwise change column to a HIGH-Z input to avoid competing low and high outputs). 
 
@@ -20,7 +20,9 @@ Notes:
 
     WARNING!!! wiring has changed between various commits. Always review DB-25 to Pro Micro wiring instructions which are in source code comments.  
 
-![prototype2.jpg](prototype2.jpg)
+![pcb.jpg](pcb.jpg)
+
+![prototype.jpg](prototype.jpg)
 
 ![serialout.jpg](serialout.jpg)
 
