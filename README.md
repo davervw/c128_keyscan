@@ -11,3 +11,5 @@ Keyboard 20 pin to ItsyBitsy wiring instructions are in source code.
 ![serialout.jpg](serialout.jpg)
 
 [Reference Vic-20 keyboard scan codes](https://www.atarimagazines.com/compute/issue21/81-1.jpg)
+
+[Reference Vic-20 schematic](http://www.zimmers.net/anonftp/pub/cbm/schematics/computers/vic20/324001-02b.gif)
