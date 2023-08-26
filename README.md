@@ -1,19 +1,13 @@
-# C64/C128 to USB keyboard HID driver #
+# Commodore Vic-20 to scan codes - USB Serial #
 
-## Simple 32u4 Pro Micro version - C128 extra keys not supported. ##
+## [Adafruit ItsyBitsy](https://learn.adafruit.com/introducting-itsy-bitsy-32u4/) version ##
 
-This hardware and software allows a Commodore 64 or Commodore 128 keyboard to be used as a USB HID keyboard (minus keys not present on C64).
-
-Status: Working 64 key solution.  Multiple keys pressed on same row issue has been resolved (only one column output must be active at one time, otherwise change column to a HIGH-Z input to avoid low and high outputs to compete). 
-
-    RESTORE key mapping not included in this iteration.
-
-    WARNING!!! wiring has changed since photo was taken. 
+This hardware and software outputs scan codes from Commodore (Vic-20, 64, 128) keyboard in Commodore Vic-20 format.  Pins 1-20 are common between these keyboards.  Pins 21-25 are for extra keys on Commodore 128.  This branch was created for demonstration purposes.
     
-DB-25 to Pro Micro wiring instructions are in source code.  
+Keyboard 20 pin to ItsyBitsy wiring instructions are in source code.  
 
 ![prototype.jpg](prototype.jpg)
 
 ![serialout.jpg](serialout.jpg)
 
-[Reference C128 Keyboard @ zimmers](http://www.zimmers.net/anonftp/pub/cbm/schematics/computers/c128/servicemanuals/manual/51.gif)
+[Reference Vic-20 keyboard scan codes](https://www.atarimagazines.com/compute/issue21/81-1.jpg)

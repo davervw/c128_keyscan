@@ -1,10 +1,10 @@
-// c128_keyscan.ino
+// Vic20Keyboard.h
 //
-// C128 keyboard scan code to USB keyboard HID adapter
+// Vic20 keyboard scan code to USB keyboard HID adapter
 // for Arduino Pro Micro (Leonardo/32U4)
 //
 // MIT LICENSE
-// c128_keyscan
+// Vic20_keyscan
 // Copyright 2023 by David Van Wagner dave@davevw.com
 // www.github.com/davervw www.twitter.com/davervw
 //
@@ -27,17 +27,18 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
-//
 
-#include "C128Keyboard.h"
+#include <Arduino.h>
 
-C128Keyboard c128keys;
+class Vic20Keyboard {
 
-void setup() {
-  Serial.begin(15200);
-  while (!Serial) {}
-}
+public:
+Vic20Keyboard();
+void poll();
 
-void loop() {
-  c128keys.poll();
-}
+private:
+int scanKeys();
+void sendKeys();
+
+Vic20Keyboard(const Vic20Keyboard&); // disallow, not implemented
+};
