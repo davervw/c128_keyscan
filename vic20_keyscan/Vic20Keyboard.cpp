@@ -1,10 +1,10 @@
 // Vic20Keyboard.h
 //
-// Vic20 keyboard scan code to USB keyboard HID adapter
+// C128 keyboard scan code to USB keyboard HID adapter
 // for Arduino Pro Micro (Leonardo/32U4)
 //
 // MIT LICENSE
-// Vic20_keyscan
+// c128_keyscan
 // Copyright 2023 by David Van Wagner dave@davevw.com
 // www.github.com/davervw www.twitter.com/davervw
 //
@@ -36,37 +36,50 @@
 //#include <Keyboard.h>
 #include "Vic20Keyboard.h"
 
-// PORTB = VIC-20 input
-static const int PORTB0PIN=A5; // A7: KBD20
-static const int PORTB1PIN=A4; // A1: KBD19
-static const int PORTB2PIN=A0; // A2: KBD18
-static const int PORTB3PIN=A3; // A3: KBD17
-static const int PORTB4PIN=A2; // A4: KBD16
-static const int PORTB5PIN=A1; // A5: KBD15
-static const int PORTB6PIN=12; // A6: KBD14
-static const int PORTB7PIN=0; // A0: KBD13
+// PORTA = C64/128 DC00
+static const int PORTA0PIN=0; // A0: DB25-13
+static const int PORTA1PIN=A4; // A1: DB25-19
+static const int PORTA2PIN=A0; // A2: DB25-18
+static const int PORTA3PIN=A3; // A3: DB25-17
+static const int PORTA4PIN=A2; // A4: DB25-16
+static const int PORTA5PIN=A1; // A5: DB25-15
+static const int PORTA6PIN=12; // A6: DB25-14
+static const int PORTA7PIN=A5; // A7: DB25-20
 
-// PORTA = VIC-20 output
-static const int PORTA0PIN=1; // KBD12
-static const int PORTA1PIN=6; // KBD11
-static const int PORTA2PIN=4; // KBD10
-static const int PORTA3PIN=5; // KBD9
-static const int PORTA4PIN=7; // KBD8
-static const int PORTA5PIN=9; // KBD7
-static const int PORTA6PIN=10; // KBD6
-static const int PORTA7PIN=11; // KBD5
+// static const int EXT0PIN=15; // extended keyboard scan register D02F output bit 0 DB25-21
+// static const int EXT1PIN=16; // extended keyboard scan register D02F output bit 1 DB25-22
+// static const int EXT2PIN=14; // extended keyboard scan register D02F output bit 2 DB25-23
 
-// KBD1 to GND
+// PORTB = C88 DC01
+static const int PORTB0PIN=1; // DB25-12
+static const int PORTB1PIN=6; // DB25-11
+static const int PORTB2PIN=4; // DB25-10
+static const int PORTB3PIN=11; // DB25-5
+static const int PORTB4PIN=7; // DB25-8
+static const int PORTB5PIN=9; // DB25-7
+static const int PORTB6PIN=10; // DB25-6
+static const int PORTB7PIN=5; // DB25-9
+
+// DB25-1 to GND
 static const int NMIPIN=13; // DB25-3
-// no connection KBD2, KBD4
+// static const int DISPLAY4080PIN=3; // DB25-24
+// static const int CAPSLOCKPIN=8; // DB25-25
+
+// no connection DB25-2, DB25-4
 
 static int last_scan = 64;
 static int last_nmi = 0;
+static int last_caps = 0;
+static int last_disp = 0;
 static bool old_pressed[64];
 static bool new_pressed[64];
 
 Vic20Keyboard::Vic20Keyboard() {
+  //Keyboard.begin();
+
   pinMode(NMIPIN, INPUT_PULLUP);
+  // pinMode(DISPLAY4080PIN, INPUT_PULLUP);
+  // pinMode(CAPSLOCKPIN, INPUT_PULLUP);
   pinMode(PORTB0PIN, INPUT_PULLUP);
   pinMode(PORTB1PIN, INPUT_PULLUP);
   pinMode(PORTB2PIN, INPUT_PULLUP);
@@ -90,9 +103,13 @@ void Vic20Keyboard::poll()
   scanKeys();
 
   int nmi = ~digitalRead(NMIPIN) & 1;
+  // int caps = ~digitalRead(CAPSLOCKPIN) & 1;
+  // int disp = ~digitalRead(DISPLAY4080PIN) & 1;
 
-  if (memcmp(old_pressed, new_pressed, 64) != 0 || last_nmi != nmi) {
+  if (memcmp(old_pressed, new_pressed, 64) != 0 || last_nmi != nmi /*|| last_caps != caps || last_disp != disp*/) {
     last_nmi = nmi;
+    // last_caps = caps;
+    // last_disp = disp;
     sendKeys();
     memcpy(old_pressed, new_pressed, 64);
   }
@@ -118,6 +135,9 @@ int Vic20Keyboard::scanKeys()
       case 5: output_pin = PORTA5PIN; break;
       case 6: output_pin = PORTA6PIN; break;
       case 7: output_pin = PORTA7PIN; break;
+      // case 8: output_pin = EXT0PIN; break;
+      // case 9: output_pin = EXT1PIN; break;
+      // case 10: output_pin = EXT2PIN; break;
     }
     pinMode(output_pin, OUTPUT);
     digitalWrite(output_pin, LOW);
@@ -145,6 +165,13 @@ int Vic20Keyboard::scanKeys()
     }
   }
 
+  // if (scan_code != last_scan) {
+  //   last_scan = scan_code;
+  //   char s[20];
+  //   sprintf(s, "scan: %d\n", scan_code);
+  //   Serial.write(s);
+  // }
+  
   return scan_code;
 }
 
@@ -155,12 +182,23 @@ void Vic20Keyboard::sendKeys()
 
   keyString[0] = 0;
 
+  // Vic-20, C64/128 share the same keyboard matrix
+  // but wiring on Vic-20 mixes up the lines, and the row/col to scan code math is different
+  // this code includes translation from a C64/128 scan code to a Vic-20 scan code
+  int toVic20Row[8] = {0, 1, 2, 7, 4, 5, 6, 3};
+  int toVic20Col[8] = {7, 1, 2, 3, 4, 5, 6, 0};
+
   int i;
   for (i=0; i<64; ++i) {
     if (new_pressed[i]) {
       if (strlen(keyString) > 0)
         strncat(keyString, ",", sizeof(keyString));
-      strncat(keyString, itoa(i, num, 10), sizeof(keyString));
+
+      int row = i % 7;
+      int col = i >> 3;
+      int scan = toVic20Row[row]<<3 | toVic20Col[col];
+
+      strncat(keyString, itoa(scan, num, 10), sizeof(keyString));
     }
   } 
 
@@ -168,6 +206,18 @@ void Vic20Keyboard::sendKeys()
     if (strlen(keyString) > 0)
       strncat(keyString, ",", sizeof(keyString));
     strncat(keyString, "1024", sizeof(keyString));
+  }
+
+  if (last_caps == 1) {
+    if (strlen(keyString) > 0)
+      strncat(keyString, ",", sizeof(keyString));
+    strncat(keyString, "128", sizeof(keyString));
+  }
+
+  if (last_disp == 1) {
+    if (strlen(keyString) > 0)
+      strncat(keyString, ",", sizeof(keyString));
+    strncat(keyString, "256", sizeof(keyString));
   }
 
   if (keyString[0] == 0)
