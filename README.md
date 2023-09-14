@@ -12,7 +12,8 @@ Multiple branches are present for this repository
 * [ninetyone_hid_itsy_bitsy](https://github.com/davervw/c128_keyscan/tree/ninetyone_hid_itsy_bitsy) - working C128 HID driver using Adafruit ItsyBitsy
 * [ninetyone_serial_itsy_bitsy](https://github.com/davervw/c128_keyscan/tree/ninetyone_serial_itsy_bitsy) - working C128 serial scancode 0..88 + RESTORE, CAPS, DISP reporter to USB serial using Adafruit ItsyBitsy
 * [sixtyfour_hid_pro_micro](https://github.com/davervw/c128_keyscan/tree/sixtyfour_hid_pro_micro) - working C128 HID driver using Arduino Pro Micro
-* [sixtyfour_serial_pro_micro](https://github.com/davervw/c128_keyscan/tree/sixtyfour_serial_pro_micro) - working C664 serial scancode 0..64 + RESTORE reporter to USB serial using Arduino Pro Micro
+* [sixtyfour_serial_pro_micro](https://github.com/davervw/c128_keyscan/tree/sixtyfour_serial_pro_micro) - working C64 serial scancode 0..64 + RESTORE reporter to USB serial using Arduino Pro Micro
+* [ninetyone_tx2_itsy_bitsy](https://github.com/davervw/c128_keyscan/tree/ninetyone_tx2_itsy_bitsy) - working C128 serial scancode 0..88 + RESTORE, CAPS, DISP reporter to software serial (pin 2, instead of I2C data) using Adafruit ItsyBitsy designed for wired connection to [M5Stack C64/C128 emulator](https://github.com/davervw/c-simple-emu6502-cbm/tree/m5) (M5CoreS3, etc.)
 
 Notes:
 
