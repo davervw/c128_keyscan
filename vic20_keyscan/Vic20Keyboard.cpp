@@ -194,11 +194,10 @@ void Vic20Keyboard::sendKeys()
       if (strlen(keyString) > 0)
         strncat(keyString, ",", sizeof(keyString));
 
-      int row = i % 7;
+      int row = i & 7;
       int col = i >> 3;
-      int scan = toVic20Row[row]<<3 | toVic20Col[col];
-
-      strncat(keyString, itoa(scan, num, 10), sizeof(keyString));
+      int vic_scan = (toVic20Row[row]<<3) | toVic20Col[col];
+      strncat(keyString, itoa(vic_scan, num, 10), sizeof(keyString));
     }
   } 
 
