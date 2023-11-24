@@ -15,7 +15,7 @@ Multiple branches are present for this repository
 * [sixtyfour_serial_pro_micro](https://github.com/davervw/c128_keyscan/tree/sixtyfour_serial_pro_micro) - working C64 serial scancode 0..64 + RESTORE reporter to USB serial using Arduino Pro Micro
 * [ninetyone_tx2_itsy_bitsy](https://github.com/davervw/c128_keyscan/tree/ninetyone_tx2_itsy_bitsy) - working C128 serial scancode 0..88 + RESTORE, CAPS, DISP reporter to software serial (pin 2, instead of I2C data) using Adafruit ItsyBitsy designed for wired connection to [M5Stack C64/C128 emulator](https://github.com/davervw/c-simple-emu6502-cbm/tree/m5) (M5CoreS3, etc.)
 * [vic20_sixtyfour_serial_itsy_bitsy](https://github.com/davervw/c128_keyscan/tree/vic20_sixtyfour_serial_itsy_bitsy) - working Vic-20 serial scancode 0..64 + RESTORE reporter to USB serial using Adafruit ItsyBitsy (changing I/O pins to match Vic-20)
-* [vic20_sixtyfour_serial_itsy_bitsy](https://github.com/davervw/c128_keyscan/tree/vic20_sixtyfour_serial_itsy_bitsy-xlat-from-c64) - working Vic-20 serial scancode 0..64 + RESTORE reporter to USB serial using Adafruit ItsyBitsy (alternate converting scan codes internally from C64 to Vic-20)
+* [vic20_sixtyfour_serial_itsy_bitsy-xlat-from-c64](https://github.com/davervw/c128_keyscan/tree/vic20_sixtyfour_serial_itsy_bitsy-xlat-from-c64) - working Vic-20 serial scancode 0..64 + RESTORE reporter to USB serial using Adafruit ItsyBitsy (alternate converting scan codes internally from C64 to Vic-20)
 
 Commodore Vic-20, 64, 128 keyboards are hardware compatible with the 128 adding additional columns and lines for an extra 26 keys.  But the Vic-20 scan code numbering is different because the lines are connected to the I/O chips in a different order, and the scan code is calculated differently.
 
