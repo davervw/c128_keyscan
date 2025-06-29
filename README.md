@@ -6,6 +6,8 @@ This hardware and software outputs scan codes from Commodore (Vic-20, 64, 128) k
     
 Keyboard 20 pin to ItsyBitsy wiring instructions are in source code.  
 
+![vic-20](vic20.jpg)
+
 ![prototype.jpg](prototype.jpg)
 
 ![serialout.jpg](serialout.jpg)
