@@ -118,54 +118,54 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   'k', // 37
   'o', // 38
   'n', // 39
-  '-', // 40
+  KEY_INSERT, // 40
   'p', // 41
   'l', // 42
-  '=', // 43
+  '-', // 43
   '.', // 44
-  ';', // 45
+  '\'', // 45
   '[', // 46
   ',', // 47
-  KEY_END, // 48
+  KEY_DELETE, // 48
   ']', // 49
-  '\'', // 50
+  ';', // 50
   KEY_HOME, // 51
   KEY_RIGHT_SHIFT, // 52
-  KEY_PAGE_DOWN, // 53
+  '=', // 53
   '\\', // 54
   '/', // 55
   '1', // 56
   '`', // 57
-  KEY_TAB, // 58
+  KEY_LEFT_CTRL, // 58
   '2', // 59
   ' ', // 60
-  KEY_LEFT_CTRL, // 61
+  KEY_LEFT_ALT, // 61
   'q', // 62
-  KEY_ESC, //121212121212121212 STOP 63
-  KEY_F5, // HELP 64
+  KEY_END, // STOP 63
+  KEY_PAGE_UP, // HELP 64
   '8', // 65
   '5', // 66
-  KEY_F10, // TAB 67
+  KEY_TAB, // TAB 67
   '2', // 68
   '4', // 69
   '7', // 70
   '1', // 71
-  KEY_F9, // ESC 72
-  '-', // + 73
-  '=', // - 74
-  KEY_F6, // LINE FEED 75
+  KEY_ESC, // ESC 72
+  KEY_INSERT, // + 73
+  '-', // - 74
+  KEY_F9, // LINE FEED 75
   KEY_RETURN, // 76
   '6', // 77
   '9', // 78
   '3', // 79
-  KEY_F11, // ALT 80
+  KEY_RIGHT_ALT, // ALT 80
   '0', // 81
   '.', // 82
   KEY_UP_ARROW, // 83
   KEY_DOWN_ARROW, // 84
   KEY_LEFT_ARROW, // 85
   KEY_RIGHT_ARROW, // 86
-  KEY_F8, // NO SCROLL 87
+  KEY_F11, // NO SCROLL 87
   },
   {
   KEY_BACKSPACE, // 0
@@ -208,54 +208,54 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   'k', // 37
   'o', // 38
   'n', // 39
-  '-', // 40
+  KEY_INSERT, // 40
   'p', // 41
   'l', // 42
-  '=', // 43
+  '-', // 43
   '.', // 44
-  ';', // 45
+  '\'', // 45
   '[', // 46
   ',', // 47
-  KEY_END, // 48
+  KEY_DELETE, // 48
   ']', // 49
-  '\'', // 50
+  ';', // 50
   KEY_HOME, // 51
   KEY_RIGHT_SHIFT, // 52
-  KEY_PAGE_DOWN, // 53
+  '=', // 53
   '\\', // 54
   '/', // 55
   '1', // 56
   '`', // 57
-  KEY_TAB, // 58
+  KEY_LEFT_CTRL, // 58
   '2', // 59
   ' ', // 60
-  KEY_LEFT_CTRL, // 61
+  KEY_LEFT_ALT, // 61
   'q', // 62
-  KEY_ESC, //121212121212121212 STOP 63
-  KEY_F5, // HELP 64
+  KEY_END, // STOP 63
+  KEY_PAGE_UP, // HELP 64
   '8', // 65
   '5', // 66
-  KEY_F10, // TAB 67
+  KEY_TAB, // TAB 67
   '2', // 68
   '4', // 69
   '7', // 70
   '1', // 71
-  KEY_F9, // ESC 72
-  '-', // + 73
-  '=', // - 74
-  KEY_F6, // LINE FEED 75
+  KEY_ESC, // ESC 72
+  KEY_INSERT, // + 73
+  '-', // - 74
+  KEY_F9, // LINE FEED 75
   KEY_RETURN, // 76
   '6', // 77
   '9', // 78
   '3', // 79
-  KEY_F11, // ALT 80
+  KEY_RIGHT_ALT, // ALT 80
   '0', // 81
   '.', // 82
   KEY_UP_ARROW, // 83
   KEY_DOWN_ARROW, // 84
   KEY_LEFT_ARROW, // 85
   KEY_RIGHT_ARROW, // 86
-  KEY_F8, // NO SCROLL 87
+  KEY_F11, // NO SCROLL 87
   },
 };
 
@@ -360,9 +360,9 @@ void C128Keyboard::sendHIDKeys()
     // sprintf(s, "RESTORE/NMI: %d\n", nmi);
     // Serial.write(s);
     if (nmi) 
-      Keyboard.press(KEY_PAGE_UP);
+      Keyboard.press(KEY_PAGE_DOWN);
     else
-      Keyboard.release(KEY_PAGE_UP);
+      Keyboard.release(KEY_PAGE_DOWN);
     last_nmi = nmi;
   }
 
@@ -370,8 +370,8 @@ void C128Keyboard::sendHIDKeys()
     // char s[15];
     // sprintf(s, "CAPS: %d\n", caps);
     // Serial.write(s);
-    Keyboard.press(KEY_F12);
-    Keyboard.release(KEY_F12);
+    Keyboard.press(KEY_CAPS_LOCK);
+    Keyboard.release(KEY_CAPS_LOCK);
     last_caps = caps;
   }
 
@@ -379,8 +379,8 @@ void C128Keyboard::sendHIDKeys()
     // char s[15];
     // sprintf(s, "DISP: %d\n", disp);
     // Serial.write(s);
-    Keyboard.press(KEY_F7);
-    Keyboard.release(KEY_F7);
+    // Keyboard.press(KEY_F7);
+    // Keyboard.release(KEY_F7);
     last_disp = disp;
   }
 

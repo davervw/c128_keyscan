@@ -2,15 +2,15 @@
 
 ## [Adafruit ItsyBitsy](https://learn.adafruit.com/introducting-itsy-bitsy-32u4/) version ##
 
-# VICE (Commodore Emulator) Positional keyboard mapping for C64
+# Xemu (Commodore Emulator) Positional keyboard mapping for MEGA65
 
-PC(US) keyboard to Commodore 64 keyboard positional mapping for VICE, etc. (may require some adjustments)
+PC(US) keyboard to Commodore MEGA65 keyboard positional mapping for Xemu (may require some adjustments)
 
-              
-    STOP(ESC) F1 F2 F3 F4 F5 F6 F7 F8
-           ←  1! 2" 3# 4$ 5% 6& 7' 8( 9) 0  +  -  Del    Ins  Home Restore      +
-    Ctrl(Tab) Q  W  E  R  T  Y  U  I  O  P  @  *  ↑      Del   £     =    7 8 9 -
-    Lock(Cap) A  S  D  F  G  H  J  K  L  :[ ;] Return                     4 5 6
+                                     
+          Esc F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 F13 F14 F15 F16
+           ←  1! 2" 3# 4$ 5% 6& 7' 8( 9) 0  -  =  Del     +  Home  Help         -
+    Ctrl(Tab) Q  W  E  R  T  Y  U  I  O  P  @  *   ↑      £  Stop Restore 7 8 9 +
+    Lock(Cap) A  S  D  F  G  H  J  K  L  ;] :[ Return                     4 5 6
     LShift    Z  X  C  V  B  N  M  ,< .> /?    RShift          Up         1 2 3
     C=(Ctrl)           SPACEBAR              C=(Ctrl)    Lft  Down  Rt    0 .   Enter
 
