@@ -2,12 +2,12 @@
 
 ## [Adafruit ItsyBitsy](https://learn.adafruit.com/introducting-itsy-bitsy-32u4/) version ##
 
-# VICE (Commodore Emulator) Positional keyboard mapping
+# VICE (Commodore Emulator) Positional keyboard mapping for C64
 
 PC(US) keyboard to Commodore 128 keyboard positional mapping for VICE, etc. (may require some adjustments)
 
-              (F1) (F2) (F3) (F4) (F5) (F6) (F7) (F8) (F9) (F10) (F11) (F12)
-    STOP(ESC) F1/2 F3/4 F5/6 F7/8 Help LF  4/80  NoS  Esc  Tab   Alt   Caps
+              
+    STOP(ESC) F1 F2 F3 F4 F5 F6 F7 F8
            ←  1! 2" 3# 4$ 5% 6& 7' 8( 9) 0  +  -  Del    Ins  Home Restore      +
     Ctrl(Tab) Q  W  E  R  T  Y  U  I  O  P  @  *  ↑      Del   £     =    7 8 9 -
     Lock(Cap) A  S  D  F  G  H  J  K  L  :[ ;] Return                     4 5 6

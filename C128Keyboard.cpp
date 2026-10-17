@@ -81,10 +81,10 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   KEY_BACKSPACE, // 0
   KEY_RETURN, // 1
   KEY_RIGHT_ARROW, // 2
-  KEY_F4, // 3
+  KEY_F7, // 3
   KEY_F1, // 4
-  KEY_F2, // 5
-  KEY_F3, // 6
+  KEY_F3, // 5
+  KEY_F5, // 6
   KEY_DOWN_ARROW, // 7
   '3', // 8
   'w', // 9
@@ -171,10 +171,10 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   KEY_BACKSPACE, // 0
   KEY_RETURN, // 1
   KEY_LEFT_ARROW, // 2
-  KEY_F4, // 3
+  KEY_F7, // 3
   KEY_F1, // 4
-  KEY_F2, // 5
-  KEY_F3, // 6
+  KEY_F3, // 5
+  KEY_F5, // 6
   KEY_UP_ARROW, // 7
   '3', // 8
   'w', // 9
