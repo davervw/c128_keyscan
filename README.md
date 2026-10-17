@@ -6,9 +6,9 @@
 
 PC(US) keyboard to Commodore MEGA65 keyboard positional mapping for Xemu (may require some adjustments)
 
-                                     
+                                     (LF....NoScroll)
           Esc F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 F13 F14 F15 F16
-           ←  1! 2" 3# 4$ 5% 6& 7' 8( 9) 0  -  =  Del     +  Home  Help         -
+           ←  1! 2" 3# 4$ 5% 6& 7' 8( 9) 0  -  =  Del     +  Home  Help     / * -
     Ctrl(Tab) Q  W  E  R  T  Y  U  I  O  P  @  *   ↑      £  Stop Restore 7 8 9 +
     Lock(Cap) A  S  D  F  G  H  J  K  L  ;] :[ Return                     4 5 6
     LShift    Z  X  C  V  B  N  M  ,< .> /?    RShift          Up         1 2 3
