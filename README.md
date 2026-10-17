@@ -1,4 +1,4 @@
-# Commodore to USB keyboard HID driver #
+# Commodore 128 to USB keyboard HID driver #
 
 ## [Adafruit ItsyBitsy](https://learn.adafruit.com/introducting-itsy-bitsy-32u4/) version ##
 
