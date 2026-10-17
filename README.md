@@ -4,7 +4,7 @@
 
 # VICE (Commodore Emulator) Positional keyboard mapping for C64
 
-PC(US) keyboard to Commodore 128 keyboard positional mapping for VICE, etc. (may require some adjustments)
+PC(US) keyboard to Commodore 64 keyboard positional mapping for VICE, etc. (may require some adjustments)
 
               
     STOP(ESC) F1 F2 F3 F4 F5 F6 F7 F8

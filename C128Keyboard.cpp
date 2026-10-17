@@ -143,24 +143,24 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   'q', // 62
   KEY_ESC, //121212121212121212 STOP 63
   KEY_F5, // HELP 64
-  KEY_KP_8, // 65
-  KEY_KP_5, // 66
+  '8', // 65
+  '5', // 66
   KEY_F10, // TAB 67
-  KEY_KP_2, // 68
-  KEY_KP_4, // 69
-  KEY_KP_7, // 70
-  KEY_KP_1, // 71
+  '2', // 68
+  '4', // 69
+  '7', // 70
+  '1', // 71
   KEY_F9, // ESC 72
-  KEY_KP_MINUS, // + 73
-  KEY_KP_PLUS, // - 74
+  '-', // + 73
+  '=', // - 74
   KEY_F6, // LINE FEED 75
-  KEY_KP_ENTER, // 76
-  KEY_KP_6, // 77
-  KEY_KP_9, // 78
-  KEY_KP_3, // 79
+  KEY_RETURN, // 76
+  '6', // 77
+  '9', // 78
+  '3', // 79
   KEY_F11, // ALT 80
-  KEY_KP_0, // 81
-  KEY_KP_DOT, // 82
+  '0', // 81
+  '.', // 82
   KEY_UP_ARROW, // 83
   KEY_DOWN_ARROW, // 84
   KEY_LEFT_ARROW, // 85
@@ -231,32 +231,32 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   ' ', // 60
   KEY_LEFT_CTRL, // 61
   'q', // 62
-  KEY_ESC, // STOP 63
+  KEY_ESC, //121212121212121212 STOP 63
   KEY_F5, // HELP 64
-  KEY_KP_8, // 65
-  KEY_KP_5, // 66
+  '8', // 65
+  '5', // 66
   KEY_F10, // TAB 67
-  KEY_KP_2, // 68
-  KEY_KP_4, // 69
-  KEY_KP_7, // 70
-  KEY_KP_1, // 71
+  '2', // 68
+  '4', // 69
+  '7', // 70
+  '1', // 71
   KEY_F9, // ESC 72
-  KEY_KP_MINUS, // + 73
-  KEY_KP_PLUS, // - 74
+  '-', // + 73
+  '=', // - 74
   KEY_F6, // LINE FEED 75
-  KEY_KP_ENTER, // 76
-  KEY_KP_6, // 77
-  KEY_KP_9, // 78
-  KEY_KP_3, // 79
+  KEY_RETURN, // 76
+  '6', // 77
+  '9', // 78
+  '3', // 79
   KEY_F11, // ALT 80
-  KEY_KP_0, // 81
-  KEY_KP_DOT, // 82
+  '0', // 81
+  '.', // 82
   KEY_UP_ARROW, // 83
   KEY_DOWN_ARROW, // 84
   KEY_LEFT_ARROW, // 85
   KEY_RIGHT_ARROW, // 86
   KEY_F8, // NO SCROLL 87
-  }
+  },
 };
 
 C128Keyboard::C128Keyboard() {
