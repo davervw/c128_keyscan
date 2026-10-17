@@ -2,6 +2,18 @@
 
 ## [Adafruit ItsyBitsy](https://learn.adafruit.com/introducting-itsy-bitsy-32u4/) version ##
 
+# VICE (Commodore Emulator) Positional keyboard mapping
+
+PC(US) keyboard to Commodore 128 keyboard positional mapping for VICE, etc. (may require some adjustments)
+
+              (F1) (F2) (F3) (F4) (F5) (F6) (F7) (F8) (F9) (F10) (F11) (F12)
+    STOP(ESC) F1/2 F3/4 F5/6 F7/8 Help LF  4/80  NoS  Esc  Tab   Alt   Caps
+           ←  1! 2" 3# 4$ 5% 6& 7' 8( 9) 0  +  -  Del    Ins  Home Restore      +
+    Ctrl(Tab) Q  W  E  R  T  Y  U  I  O  P  @  *  ↑      Del   £     =    7 8 9 -
+    Lock(Cap) A  S  D  F  G  H  J  K  L  :[ ;] Return                     4 5 6
+    LShift    Z  X  C  V  B  N  M  ,< .> /?    RShift          Up         1 2 3
+    C=(Ctrl)           SPACEBAR              C=(Ctrl)    Lft  Down  Rt    0 .   Enter
+
 This hardware and software allows a Commodore 64, 128, or Vic-20 keyboard to be used as a USB HID keyboard.  The keyboard pin numbers are the same between all the Commodore systems (e.g. single inline pins for most with key at pin 2, or DB-25 for external keyboard with 128D). The use of ItsyBitsy allowed all the extra lines necessary to support the extra keys added for C128.  ItsyBitsy is an alternate form factor related to [Arduino Leonardo](https://docs.arduino.cc/hardware/leonardo) with all the extra lines of the 32U4 present.  The [ATmega32U4](https://www.microchip.com/en-us/product/atmega32u4) has the ability to directly act as a USB HID device in conjuction with the Arduino keyboard library.  Utilizing a DB-25 to 0.1" 2.54mm pitch dual row pin socket adapter for the first hand soldered and wired circuit board to make it both easier to build and semi-permanent.
 
 Status: Working 88+ key solution. Multiple keys pressed on same row issue has been resolved (only one column output must be active at one time, otherwise change column to a HIGH-Z input to avoid competing low and high outputs). 

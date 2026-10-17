@@ -1,4 +1,4 @@
-// C128Keyboard.h
+// C128Keyboard.cpp
 //
 // C128 keyboard scan code to USB keyboard HID adapter
 // for Arduino Pro Micro (Leonardo/32U4)
@@ -81,10 +81,10 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   KEY_BACKSPACE, // 0
   KEY_RETURN, // 1
   KEY_RIGHT_ARROW, // 2
-  KEY_F7, // 3
+  KEY_F4, // 3
   KEY_F1, // 4
-  KEY_F3, // 5
-  KEY_F5, // 6
+  KEY_F2, // 5
+  KEY_F3, // 6
   KEY_DOWN_ARROW, // 7
   '3', // 8
   'w', // 9
@@ -118,145 +118,145 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   'k', // 37
   'o', // 38
   'n', // 39
-  '+', // 40
+  '-', // 40
   'p', // 41
   'l', // 42
-  '-', // 43
+  '=', // 43
   '.', // 44
-  ':', // 45
-  '@', // 46
+  ';', // 45
+  '[', // 46
   ',', // 47
-  '\\', // 48
-  '*', // 49
-  ';', // 50
+  KEY_END, // 48
+  ']', // 49
+  '\'', // 50
   KEY_HOME, // 51
   KEY_RIGHT_SHIFT, // 52
-  '=', // 53
-  '^', // 54
+  KEY_PAGE_DOWN, // 53
+  '\\', // 54
   '/', // 55
   '1', // 56
-  '_', // 57
-  KEY_LEFT_CTRL, // 58
+  '`', // 57
+  KEY_TAB, // 58
   '2', // 59
   ' ', // 60
-  KEY_LEFT_GUI, // 61
+  KEY_LEFT_CTRL, // 61
   'q', // 62
-  KEY_PAUSE, // 63
-  KEY_F1, // HELP 64
+  KEY_ESC, //121212121212121212 STOP 63
+  KEY_F5, // HELP 64
   KEY_KP_8, // 65
   KEY_KP_5, // 66
-  KEY_TAB, // 67
+  KEY_F10, // TAB 67
   KEY_KP_2, // 68
   KEY_KP_4, // 69
   KEY_KP_7, // 70
   KEY_KP_1, // 71
-  KEY_ESC, // 72
-  KEY_KP_PLUS, // 73
-  KEY_KP_MINUS, // 74
-  KEY_NUM_LOCK, // LINE FEED 75
+  KEY_F9, // ESC 72
+  KEY_KP_MINUS, // + 73
+  KEY_KP_PLUS, // - 74
+  KEY_F6, // LINE FEED 75
   KEY_KP_ENTER, // 76
   KEY_KP_6, // 77
   KEY_KP_9, // 78
   KEY_KP_3, // 79
-  KEY_LEFT_ALT, // 80
+  KEY_F11, // ALT 80
   KEY_KP_0, // 81
   KEY_KP_DOT, // 82
   KEY_UP_ARROW, // 83
   KEY_DOWN_ARROW, // 84
   KEY_LEFT_ARROW, // 85
   KEY_RIGHT_ARROW, // 86
-  KEY_SCROLL_LOCK, // 87
+  KEY_F8, // NO SCROLL 87
   },
   {
-  KEY_INSERT, // 0
+  KEY_BACKSPACE, // 0
   KEY_RETURN, // 1
   KEY_LEFT_ARROW, // 2
-  KEY_F8, // 3
-  KEY_F2, // 4
-  KEY_F4, // 5
-  KEY_F6, // 6
-  KEY_UP_ARROW, // 7 
-  '#', // 8
-  'W', // 9
-  'A', // 10
-  '$', // 11
-  'Z', // 12
-  'S', // 13
-  'E', // 14
+  KEY_F4, // 3
+  KEY_F1, // 4
+  KEY_F2, // 5
+  KEY_F3, // 6
+  KEY_UP_ARROW, // 7
+  '3', // 8
+  'w', // 9
+  'a', // 10
+  '4', // 11
+  'z', // 12
+  's', // 13
+  'e', // 14
   KEY_LEFT_SHIFT, // 15
-  '%', // 16
-  'R', // 17
-  'D', // 18
-  '&', // 19
-  'C', // 20
-  'F', // 21
-  'T', // 22
-  'X', // 23
-  '\'', // 24
-  'Y', // 25
-  'G', // 26
-  '(', // 27
-  'B', // 28
-  'H', // 29
-  'U', // 30
-  'V', // 31
-  ')', // 32
-  'I', // 33
-  'J', // 34
-  0, // 0 35
-  'M', // 36
-  'K', // 37
-  'O', // 38
-  'N', // 39
-  '+', // 40
-  'P', // 41
-  'L', // 42
-  '-', // 43
-  '>', // 44
-  '[', // 45
-  '@', // 46
-  '<', // 47
-  '\\', // 48
-  '*', // 49
-  ']', // 50
+  '5', // 16
+  'r', // 17
+  'd', // 18
+  '6', // 19
+  'c', // 20
+  'f', // 21
+  't', // 22
+  'x', // 23
+  '7', // 24
+  'y', // 25
+  'g', // 26
+  '8', // 27
+  'b', // 28
+  'h', // 29
+  'u', // 30
+  'v', // 31
+  '9', // 32
+  'i', // 33
+  'j', // 34
+  '0', // 35
+  'm', // 36
+  'k', // 37
+  'o', // 38
+  'n', // 39
+  '-', // 40
+  'p', // 41
+  'l', // 42
+  '=', // 43
+  '.', // 44
+  ';', // 45
+  '[', // 46
+  ',', // 47
+  KEY_END, // 48
+  ']', // 49
+  '\'', // 50
   KEY_HOME, // 51
   KEY_RIGHT_SHIFT, // 52
-  '=', // 53
-  '^', // 54
+  KEY_PAGE_DOWN, // 53
+  '\\', // 54
   '/', // 55
-  '!', // 56
-  '_', // 57
-  KEY_LEFT_CTRL, // 58
-  '"', // 59
+  '1', // 56
+  '`', // 57
+  KEY_TAB, // 58
+  '2', // 59
   ' ', // 60
-  KEY_LEFT_GUI, // 61
-  'Q', // 62
-  KEY_PAUSE, // 63
-  KEY_F1, // HELP 64
+  KEY_LEFT_CTRL, // 61
+  'q', // 62
+  KEY_ESC, // STOP 63
+  KEY_F5, // HELP 64
   KEY_KP_8, // 65
   KEY_KP_5, // 66
-  KEY_TAB, // 67
+  KEY_F10, // TAB 67
   KEY_KP_2, // 68
   KEY_KP_4, // 69
   KEY_KP_7, // 70
   KEY_KP_1, // 71
-  KEY_ESC, // 72
-  KEY_KP_PLUS, // 73
-  KEY_KP_MINUS, // 74
-  KEY_NUM_LOCK, // LINE FEED 75
+  KEY_F9, // ESC 72
+  KEY_KP_MINUS, // + 73
+  KEY_KP_PLUS, // - 74
+  KEY_F6, // LINE FEED 75
   KEY_KP_ENTER, // 76
   KEY_KP_6, // 77
   KEY_KP_9, // 78
   KEY_KP_3, // 79
-  KEY_LEFT_ALT, // 80
-  KEY_KP_0, // 81     
+  KEY_F11, // ALT 80
+  KEY_KP_0, // 81
   KEY_KP_DOT, // 82
   KEY_UP_ARROW, // 83
   KEY_DOWN_ARROW, // 84
   KEY_LEFT_ARROW, // 85
   KEY_RIGHT_ARROW, // 86
-  KEY_SCROLL_LOCK, // 87
-  },
+  KEY_F8, // NO SCROLL 87
+  }
 };
 
 C128Keyboard::C128Keyboard() {
@@ -359,6 +359,10 @@ void C128Keyboard::sendHIDKeys()
     // char s[20];
     // sprintf(s, "RESTORE/NMI: %d\n", nmi);
     // Serial.write(s);
+    if (nmi) 
+      Keyboard.press(KEY_PAGE_UP);
+    else
+      Keyboard.release(KEY_PAGE_UP);
     last_nmi = nmi;
   }
 
@@ -366,8 +370,8 @@ void C128Keyboard::sendHIDKeys()
     // char s[15];
     // sprintf(s, "CAPS: %d\n", caps);
     // Serial.write(s);
-    Keyboard.press(KEY_CAPS_LOCK);
-    Keyboard.release(KEY_CAPS_LOCK);
+    Keyboard.press(KEY_F12);
+    Keyboard.release(KEY_F12);
     last_caps = caps;
   }
 
@@ -375,8 +379,8 @@ void C128Keyboard::sendHIDKeys()
     // char s[15];
     // sprintf(s, "DISP: %d\n", disp);
     // Serial.write(s);
-    Keyboard.press(KEY_NUM_LOCK);
-    Keyboard.release(KEY_NUM_LOCK);
+    Keyboard.press(KEY_F7);
+    Keyboard.release(KEY_F7);
     last_disp = disp;
   }
 
@@ -426,9 +430,6 @@ void C128Keyboard::checkSuppressShift(int shift)
     if (!last_suppress) {
       checkToggleKey(0, 2);    
       checkToggleKey(0, 7);
-      checkToggleKey(0, 45);    
-      checkToggleKey(0, 50);
-      checkToggleKey(0, 24);
     }
 
     // suppress state change this time
@@ -440,9 +441,6 @@ void C128Keyboard::checkSuppressShift(int shift)
   else if (last_suppress) {
     checkToggleKey(1, 2);    
     checkToggleKey(1, 7);    
-    checkToggleKey(1, 45);    
-    checkToggleKey(1, 50);
-    checkToggleKey(1, 24);
     last_suppress = false;
   }
 }
@@ -452,10 +450,7 @@ bool C128Keyboard::mustSuppressShift(int shift)
   if (!shift)
     return false;
   return new_pressed[2] // LEFT CURSOR
-    || new_pressed[7] // UP CURSOR
-    || new_pressed[45] // [
-    || new_pressed[50] // ]
-    || new_pressed[24]; // ' single quote
+    || new_pressed[7]; // UP CURSOR
 }
 
 void C128Keyboard::checkToggleKey(int shift, int scan_code)
