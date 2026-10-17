@@ -28,8 +28,6 @@ Multiple branches are present for this repository
 
 Notes:
 
-    RESTORE key mapping not included in this iteration.
-
     WARNING!!! wiring has changed between various commits. Always review DB-25 to Pro Micro wiring instructions which are in source code comments.  
 
 ![pcb.jpg](pcb.jpg)
