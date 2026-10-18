@@ -141,7 +141,7 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   ' ', // 60
   KEY_LEFT_CTRL, // 61
   'q', // 62
-  KEY_ESC, //121212121212121212 STOP 63
+  KEY_ESC, // STOP 63
   KEY_F5, // HELP 64
   '8', // 65
   '5', // 66
@@ -150,7 +150,7 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   '4', // 69
   '7', // 70
   '1', // 71
-  KEY_F9, // ESC 72
+  KEY_ESC, // ESC 72
   '-', // + 73
   '=', // - 74
   KEY_F6, // LINE FEED 75
@@ -158,7 +158,7 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   '6', // 77
   '9', // 78
   '3', // 79
-  KEY_F11, // ALT 80
+  KEY_LEFT_ALT, // ALT 80
   '0', // 81
   '.', // 82
   KEY_UP_ARROW, // 83
@@ -231,7 +231,7 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   ' ', // 60
   KEY_LEFT_CTRL, // 61
   'q', // 62
-  KEY_ESC, //121212121212121212 STOP 63
+  KEY_ESC, // STOP 63
   KEY_F5, // HELP 64
   '8', // 65
   '5', // 66
@@ -240,7 +240,7 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   '4', // 69
   '7', // 70
   '1', // 71
-  KEY_F9, // ESC 72
+  KEY_ESC, // ESC 72
   '-', // + 73
   '=', // - 74
   KEY_F6, // LINE FEED 75
@@ -248,7 +248,7 @@ static unsigned char C128Keyboard::keyboard_map[2][88] = {
   '6', // 77
   '9', // 78
   '3', // 79
-  KEY_F11, // ALT 80
+  KEY_LEFT_ALT, // ALT 80
   '0', // 81
   '.', // 82
   KEY_UP_ARROW, // 83
@@ -379,8 +379,10 @@ void C128Keyboard::sendHIDKeys()
     // char s[15];
     // sprintf(s, "DISP: %d\n", disp);
     // Serial.write(s);
-    Keyboard.press(KEY_F7);
-    Keyboard.release(KEY_F7);
+    Keyboard.press(KEY_LEFT_ALT);
+    Keyboard.press('d');
+    Keyboard.release('d');
+    Keyboard.release(KEY_LEFT_ALT);
     last_disp = disp;
   }
 
