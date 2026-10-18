@@ -1,4 +1,4 @@
-# Commodore 128/64/20 to USB keyboard HID driver #
+# Commodore 128/64/20 to USB keyboard HID driver for Xemu MEGA65 #
 
 ## [Adafruit ItsyBitsy](https://learn.adafruit.com/introducting-itsy-bitsy-32u4/) version ##
 
@@ -8,6 +8,8 @@ PC(US) keyboard to Commodore MEGA65 keyboard positional mapping for Xemu (may re
 
 Also see [opposite symbolic mapping software-only solution for Windows](https://github.com/davervw/xemu_mega65_symbolic_keyboard/blob/main/README.md)
 
+For reference, this is the PC positional keyboard mapping for Xemu Mega65, targeted by this adapter.  The adapter is a combination of hardware (Adafruit ItsyBitsy) and firmware (Arduino) to adapt a classic 8-bit Commodore keyboard to function as a Mega65 keyboard.  The benefit is the Commodore symbols and keys match what the Mega65 is expecting (Shift and Commodore/Mega key graphics).
+
                                      (LF....NoScroll)
           Esc F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 F13 F14 F15 F16
            ←  1! 2" 3# 4$ 5% 6& 7' 8( 9) 0  -  =  Del     +  Home  Help     / * -
@@ -16,11 +18,9 @@ Also see [opposite symbolic mapping software-only solution for Windows](https://
     LShift    Z  X  C  V  B  N  M  ,< .> /?    RShift          Up         1 2 3
     C=(Ctrl)           SPACEBAR              C=(Ctrl)    Lft  Down  Rt    0 .   Enter
 
-This hardware/software solution allows a Commodore 64, 128, or Vic-20 keyboard to be used as a USB HID keyboard.  The keyboard pin numbers are the same between all the Commodore systems (e.g. single inline pins for most with key at pin 2, or DB-25 for external keyboard with 128D). The use of ItsyBitsy allowed all the extra lines necessary to support the extra keys added for C128.  ItsyBitsy is an alternate form factor related to [Arduino Leonardo](https://docs.arduino.cc/hardware/leonardo) with all the extra lines of the 32U4 present.  The [ATmega32U4](https://www.microchip.com/en-us/product/atmega32u4) has the ability to directly act as a USB HID device in conjuction with the Arduino keyboard library.  Utilizing a DB-25 to 0.1" 2.54mm pitch dual row pin socket adapter for the first hand soldered and wired circuit board to make it both easier to build and semi-permanent.
+This hardware/software solution allows a Commodore 64, 128, or Vic-20 keyboard to be used as a USB HID keyboard with Xemu Mega65.  
 
-Status: Working 88+ key solution. Multiple keys pressed on same row issue has been resolved (only one column output must be active at one time, otherwise change column to a HIGH-Z input to avoid competing low and high outputs). 
-
-This repository contains multiple branch variants for different hardware and use cases.
+# This repository contains multiple branch variants for different hardware and use cases.
 
 ### HID general use branches - for use with Windows, Mac, Android
 
