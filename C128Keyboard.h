@@ -1,7 +1,7 @@
 // C128Keyboard.h
 //
 // C128 keyboard scan code to USB keyboard HID adapter
-// for Arduino Pro Micro (Leonardo/32U4)
+// for Adafruit Itsy Bitsy (Leonardo/32U4)
 //
 // MIT LICENSE
 // c128_keyscan
