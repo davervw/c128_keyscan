@@ -1,10 +1,12 @@
-# Commodore 128 to USB keyboard HID driver #
+# Commodore 128/64/20 to USB keyboard HID driver #
 
 ## [Adafruit ItsyBitsy](https://learn.adafruit.com/introducting-itsy-bitsy-32u4/) version ##
 
 # Xemu (Commodore Emulator) Positional keyboard mapping for MEGA65
 
 PC(US) keyboard to Commodore MEGA65 keyboard positional mapping for Xemu (may require some adjustments)
+
+Also see [opposite symbolic mapping software-only solution for Windows](https://github.com/davervw/xemu_mega65_symbolic_keyboard/blob/main/README.md)
 
                                      (LF....NoScroll)
           Esc F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 F13 F14 F15 F16
