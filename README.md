@@ -48,8 +48,6 @@ Commodore Vic-20, 64, 128 keyboards are hardware compatible with the 128 adding 
 
 Notes:
     
-    RESTORE key mapping not included in this iteration
-
     WARNING!!! wiring has changed between various commits. 
     Always review DB-25 to Arduino wiring instructions which are in source code comments.  
 
