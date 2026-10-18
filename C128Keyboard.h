@@ -42,6 +42,8 @@ bool C128Keyboard::isChanged(int scan_code);
 void checkChange(int shift, int scan_code);
 bool mustSuppressShift(int shift);
 void checkSuppressShift(int shift);
+bool mustForceShift(int shift);
+void checkForceShift(int shift);
 void checkToggleKey(int shift, int scan_code);
 
 C128Keyboard(const C128Keyboard&); // disallow, not implemented
