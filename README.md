@@ -45,12 +45,8 @@ Commodore Vic-20, 64, 128 keyboards are hardware compatible with the 128 adding 
 
 Notes:
     
-    RESTORE key mapping not included in this iteration
-
     WARNING!!! wiring has changed between various commits. 
     Always review DB-25 to Arduino wiring instructions which are in source code comments.  
-
-    C65 and Mega65 hardware keyboards not supported as a source for these HID/Serial solutions, they are not directly compatible with the Vic-20/C64/C128 keyboard lines.
 
 ![pcb.jpg](pcb.jpg)
 
