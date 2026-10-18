@@ -1,10 +1,12 @@
-# Commodore 128/64/20 to USB keyboard HID driver #
+# Commodore 128/64/20 to USB keyboard HID driver for VICE C128 #
 
 ## [Adafruit ItsyBitsy](https://learn.adafruit.com/introducting-itsy-bitsy-32u4/) version ##
 
 # VICE (Commodore Emulator) Positional keyboard mapping
 
 PC(US) keyboard to Commodore 128 keyboard positional mapping for VICE, etc. (may require some adjustments)
+
+For reference, this is the PC positional keyboard mapping for VICE C128, targeted by this adapter. The adapter is a combination of hardware (Adafruit ItsyBitsy) and firmware (Arduino) to adapt a classic 8-bit Commodore keyboard to function as a C128 keyboard. The benefit is the Commodore symbols and keys match what the C128 is expecting (Shift and Commodore key graphics). You can type on a physical C128 keyboard and have all the keys work in the emulator; you can also compromise and use a C64 or Vic-20 keyboard simply sacrificing support for the extra C128-only keys (and as multiple HID keyboards can be connected simultaneously, if you need the extra keys you can occassionally type on the PC keyboard for those keys).
 
               (F1) (F2) (F3) (F4) (F5) (F6) (F7) (F8) (F9) (F10) (F11) (F12)
     STOP(ESC) F1/2 F3/4 F5/6 F7/8 Help LF  4/80  NoS  Esc  Tab   Alt   Caps
@@ -14,11 +16,7 @@ PC(US) keyboard to Commodore 128 keyboard positional mapping for VICE, etc. (may
     LShift    Z  X  C  V  B  N  M  ,< .> /?    RShift          Up         1 2 3
     C=(Ctrl)           SPACEBAR              C=(Ctrl)    Lft  Down  Rt    0 .   Enter
 
-This hardware and software allows a Commodore 64, 128, or Vic-20 keyboard to be used as a USB HID keyboard.  The keyboard pin numbers are the same between all the Commodore systems (e.g. single inline pins for most with key at pin 2, or DB-25 for external keyboard with 128D). The use of ItsyBitsy allowed all the extra lines necessary to support the extra keys added for C128.  ItsyBitsy is an alternate form factor related to [Arduino Leonardo](https://docs.arduino.cc/hardware/leonardo) with all the extra lines of the 32U4 present.  The [ATmega32U4](https://www.microchip.com/en-us/product/atmega32u4) has the ability to directly act as a USB HID device in conjuction with the Arduino keyboard library.  Utilizing a DB-25 to 0.1" 2.54mm pitch dual row pin socket adapter for the first hand soldered and wired circuit board to make it both easier to build and semi-permanent.
-
-Status: Working 88+ key solution. Multiple keys pressed on same row issue has been resolved (only one column output must be active at one time, otherwise change column to a HIGH-Z input to avoid competing low and high outputs). 
-
-This repository contains multiple branch variants for different hardware and use cases.
+# This repository contains multiple branch variants for different hardware and use cases.
 
 ### HID general use branches - for use with Windows, Mac, Android
 
@@ -30,7 +28,7 @@ This repository contains multiple branch variants for different hardware and use
 (WYSIWYG - what you see is what you get - using Vic-20, C64, C128 electrically compatible keyboards)
 
 * [c64_vice_positional_hid_itsy_bitsy](https://github.com/davervw/c128_keyscan/tree/c64_vice_positional_hid_itsy_bitsy) - VICE C64 & Vic-20 positional HID driver
-* [plus4_vice_positional_hid_itsy_bitsy](https://github.com/davervw/c128_keyscan/tree/plus4_vice_positional_hid_itsy_bitsy) - VICE plus/4 positional HID driver
+* [plus4_vice_positional_hid_itsy_bitsy](https://github.com/davervw/c128_keyscan/tree/plus4_vice_positional_hid_itsy_bitsy) - VICE C128 positional HID driver
 * [c128_vice_positional_hid_itsy_bitsy](https://github.com/davervw/c128_keyscan/tree/c128_vice_positional_hid_itsy_bitsy) - VICE C128 positional HID driver
 * [mega65_xemu_positional_hid_itsy_bitsy](https://github.com/davervw/c128_keyscan/tree/mega65_xemu_positional_hid_itsy_bitsy) - Xemu Mega65 positional HID driver
 
@@ -46,12 +44,8 @@ Commodore Vic-20, 64, 128 keyboards are hardware compatible with the 128 adding 
 
 Notes:
     
-    RESTORE key mapping not included in this iteration
-
     WARNING!!! wiring has changed between various commits. 
     Always review DB-25 to Arduino wiring instructions which are in source code comments.  
-
-    C65 and Mega65 hardware keyboards not supported as a source for these HID/Serial solutions, they are not directly compatible with the Vic-20/C64/C128 keyboard lines.
 
 ![pcb.jpg](pcb.jpg)
 
