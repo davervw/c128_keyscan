@@ -56,3 +56,4 @@ Links
 
 * [Reference C128 Keyboard @ zimmers](http://www.zimmers.net/anonftp/pub/cbm/schematics/computers/c128/servicemanuals/manual/51.gif)
 * [Blog: Extremely small emulated C64](https://techwithdave.davevw.com/2023/06/extremely-small-emulated-c64.html)
+* [Related solution on YouTube](https://youtu.be/dLfbL95iST4?si=2PRL7hxUi-ggiGmW) (unaffiliated)
